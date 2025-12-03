@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,visualstudiocode,visualstudio,database,data
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,visualstudiocode,visualstudio,database,data
 
+table_creation_tdm_1.py
+table_creation_tdm_2.py
+
 ### Data ###
 *.csv
 *.dat
