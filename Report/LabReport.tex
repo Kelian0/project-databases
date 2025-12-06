@@ -1,0 +1,254 @@
+\documentclass[11pt]{article}
+\usepackage{graphicx} 
+\usepackage{lipsum}
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+\usepackage{algorithm2e}
+\usepackage{algpseudocode}
+\usepackage{geometry}
+\usepackage{indentfirst} 
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{caption}
+
+
+%--------------------Reference List
+\usepackage[
+    backend=biber,
+    style=apa,
+  ]{biblatex}
+\addbibresource{MasterDataScience.bib}
+
+
+%--------------------Style Algo
+
+\RestyleAlgo{ruled}
+\numberwithin{algocf}{section}
+
+%--------------------New Command
+
+\newcommand{\lstminput}{[h_{t-1},x_t]}
+
+
+%--------------------Title Information
+\title{
+\includegraphics[height=2cm]{logo/logo_lille.png}\\
+\vspace{2cm}
+\includegraphics[height=2cm]{logo/Logo-EcoleCentrale-couleur-RVB.png}\\
+\vspace{2cm}
+\textbf{Report on the \LaTeX{} Section}}
+\author{Kélian PONS
+		\\
+		1\textsuperscript{st} year Master student, Master Data Science\\
+        \textbf{Université de Lille}
+       } \date{\today}
+
+
+%--------------------Margin & Indentation
+\geometry{hmargin=1.7in,vmargin=1in}
+\setlength{\parindent}{0.25in}
+
+
+%--------------------Title Page
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\newpage
+\pagenumbering{roman}
+
+%--------------------Tables of content
+\setcounter{tocdepth}{2}
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+\newpage
+\listofalgorithms
+\newpage
+\pagenumbering{arabic}
+
+%--------------------Begining of the Report
+
+
+\addcontentsline{toc}{section}{Introduction}   
+\section*{Introduction}
+
+Please note that this report is written in the context of the \LaTeX{} course, so the content and
+the different sections may not have a link together. The first part will give some comments, thoughts, 
+and remarks on the review of \cite{baoDatadrivenStockForecasting2025}. 
+This paper was published in August 2024 and explores the field of stock price prediction,
+especially with neural networks. The second part is here to show case the use of the algorithm2e package
+with some examples from the course Algorithm and their complexity. 
+
+
+\section{Data-Driven Stock Forecasting Models}
+
+The different stock forecasting models can 
+be split into \emph{3 categories} depending on the types of data that are given
+as input:
+\begin{itemize}
+    \item \textbf{Price-driven} models: These models only use the historical data of the prices of different stocks.
+Technical indicators can also be used as they are computed from the price data.
+    \item \textbf{Event-driven} models: These models use other data than the stock prices to make their prediction.
+For example, a model can have access to financial articles or social network posts to predict market trends.
+    \item \textbf{Hybrid} models: They are the combination of the two above. 
+\end{itemize}
+
+The Table \ref{tab1} shows some examples of indexes often used for training and testing 
+models for stock forecasting.
+
+\begin{center}
+\begin{tabular}{||l | l | l||}
+ \hline
+ Abbreviation & Country & Detail \\ [0.5ex] 
+ \hline\hline
+ CSI 100 & China & China Securities 100 Index \\ 
+ \hline
+ NIKKEI 225 & Japan & Nikkei 225 Index \\
+ \hline
+ NIFTY 50 & India & National Stock Exchange of India 50 Index \\
+ \hline
+ FCHI & France & France CAC 40 Index\\
+ \hline
+ DAX & Germany & Deutscher Aktienindex\\  
+ \hline
+  FTSE 100 & UK & Financial Times Stock Exchange 100 Index\\  
+ \hline
+  NASDAQ & USA & NASDAQ Composite Index\\  
+ \hline
+ S\&P 500 & USA & Standard \& Poor's 500 Index\\  
+ \hline
+\end{tabular}
+\captionof{table}{Stock market and exchange information}
+\label{tab1}
+\end{center}
+
+
+We can also differenciate the model depending on the type of network used.
+This report will focus on Long Short Term Memory networks and Transformer based networks.
+
+
+
+\subsection{Recurrent Neural Networks}
+
+\underline{Recurrent neural networks (RNNs)}  can handle time series. To do so, they process the sequence 
+of data one element at the time. The output of the previous state is given as part of the input 
+for the next state. However classic RNNs are subject to gradient vanish. For long sequences, old 
+information tends to fade throughout the iteration. This is why, \cite{seppLongShortTermMemory1997} 
+developed the long-short term memory (LSTM). The state of a LSTM cell is described by these equations:
+
+\begin{align}
+    f_t=&\sigma(W_f\cdot\lstminput+b_f)
+    \\
+    i_t=&\sigma(W_i\cdot\lstminput+b_i)
+    \\
+    g_t=&\tanh(W_g\cdot\lstminput+b_g)
+    \\
+    o_t=&\sigma(W_o\cdot\lstminput+b_o)
+    \\
+    c_t=&f_t\ast c_{(t-1)+i_t} \ast g_t
+    \\
+    h_t=&o_t\ast \tanh(c_t)
+\end{align}
+
+\begin{figure}[h]\label{fig:1}
+    \centering
+    \includegraphics[width=0.8\textwidth]{figs/LSTM.png}    
+    \caption{LSTM architecture}
+\end{figure}
+
+LSTM are very popular for time series prediction, and so for stock price forecasting. 
+While LSTM handle long term information better then classic RNN, they still struggle 
+if the serie is too long. In the next part we will see how transformer model can handle
+time serie data.
+
+
+\subsection{Transformer}
+
+Transformers are a model architecture develop by \cite{vaswaniAttentionAllYou2023}. 
+Transformers were first used in natural language processing (NLP)
+tasks such as translation. They are the base of the large language 
+models (LLMs) such as Gpt or Bert. \\
+\indent Transformers are often used with text data, which can be seen as sequential data. 
+The key process for transformer-based models is the attention mechanism, see figure \ref{fig:2}.
+The first step of the attention mechanism is to compute, from the input, the 3 matrices : 
+$Q$ (Query), $K$ (Key),$V$ (Value). Then we need to compute the attention score given 
+by this equation:
+
+\begin{align}
+    Attention(Q,K,V) = softmax(\frac{QK^T}{\sqrt{d_k}})V
+\end{align}
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.2\textwidth]{figs/attention_1.png}    
+    \caption{Attention mechanism}\label{fig:2}
+\end{figure}
+
+
+For more information on the attention mechanism you can see
+\href{https://jalammar.github.io/illustrated-transformer/}{The Illustrated Transformer}
+written by Jay Alammar from this link:
+\url{https://jalammar.github.io/illustrated-transformer/}
+
+\newpage
+\section{Algorithm feature}
+
+\begin{algorithm}[ht]
+    \caption{Algorithm f1}\label{alg:f1}
+    \LinesNumbered
+    \SetKwProg{Function}{function}{}{end}
+    \SetKwInOut{Input}{input}
+    \SetKwInOut{Output}{output}
+    \nl \Function{f1 (a: Array of reals): Real}{        
+        \Input{a: Array of Reals}
+        \Output{result: ?}
+        result $\gets 0$\\
+        \For{i from 0 to length(a) - 1}{
+            result $\gets$ result + a[i]
+        }
+        result $\gets$ result / length(a)\\
+        \Return result
+    }
+\end{algorithm}
+
+The first algorithm \hyperref[alg:f2]{f1} computes the \textbf{average} value of an 
+array of values in $\mathbb{R}$. The complexity of this algorithm is 
+$\Theta (n)$ with n the length of the input array.
+
+\begin{algorithm}[ht]
+    
+    \caption{Algorithm f2}\label{alg:f2}
+    \LinesNumbered
+    \SetKwProg{Function}{function}{}{end}
+    \SetKwInOut{Input}{input}
+    \SetKwInOut{Output}{output}
+    \nl \Function{f2 (a: Array of reals): Real}{        
+        \Input{a: Array of Reals}
+        \Output{result: ?}
+        m : Real\\
+        result $\gets 0$\\
+        m $\gets f1(a)$\\
+        \For{i from 0 to length(a) - 1}{
+            result $\gets$ result + (a[i] - m) * (a[i] - m)
+        }
+        result $\gets$ result / length(a)\\
+        \Return result
+    }
+\end{algorithm}
+
+This second algorithm \hyperref[alg:f2]{f2} computes the \textit{variance} of the input array.
+The complexity of the algorithm is still $\Theta (n)$ even if there are twice 
+as many operation. 
+
+
+
+
+%--------------------Reference List
+\newpage
+\printbibliography[title={Bibliography}, heading=bibintoc]
+
+
+\end{document}

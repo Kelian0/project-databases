@@ -1,0 +1,445 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{apa/apasortcite//global/global/global}
+    \entry{baoDatadrivenStockForecasting2025}{article}{}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=027992604956cb6831be0d424c5690ff}{%
+           family={Bao},
+           familyi={B\bibinitperiod},
+           given={Wuzhida},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=178217f354e6ec5b9421573ae4bf6db1}{%
+           family={Cao},
+           familyi={C\bibinitperiod},
+           given={Yuting},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=dc9616dbd138c8816662e7a1bf22bc60}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Yin},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=726d83ed8a9d0db68eba23c55bdaa95d}{%
+           family={Che},
+           familyi={C\bibinitperiod},
+           given={Hangjun},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=98c67cf20f857391e8b210f5f20e88ef}{%
+           family={Huang},
+           familyi={H\bibinitperiod},
+           given={Junjian},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=49bf813761e5dac014173b6ab561913a}{%
+           family={Wen},
+           familyi={W\bibinitperiod},
+           given={Shiping},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{aad1876b14ac6b72f8046f2f50bdab13}
+      \strng{fullhash}{486761e51499d627ef8bd7fbbb3d3c72}
+      \strng{fullhashraw}{486761e51499d627ef8bd7fbbb3d3c72}
+      \strng{bibnamehash}{486761e51499d627ef8bd7fbbb3d3c72}
+      \strng{authorbibnamehash}{486761e51499d627ef8bd7fbbb3d3c72}
+      \strng{authornamehash}{aad1876b14ac6b72f8046f2f50bdab13}
+      \strng{authorfullhash}{486761e51499d627ef8bd7fbbb3d3c72}
+      \strng{authorfullhashraw}{486761e51499d627ef8bd7fbbb3d3c72}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{As a core branch of financial forecasting, stock forecasting plays a crucial role for financial analysts, investors, and policymakers in managing risks and optimizing investment strategies, significantly enhancing the efficiency and effectiveness of economic decision-making. With the rapid development of information technology and computer science, data-driven neural network technologies have increasingly become the mainstream method for stock forecasting. Although recent review studies have provided a basic introduction to deep learning methods, they still lack detailed discussion on network architecture design and innovative details. Additionally, the latest research on emerging large language models and neural network structures has yet to be included in existing review literature. In light of this, this paper comprehensively reviews the literature on datadriven neural networks in the field of stock forecasting from 2015 to 2023, discussing various classic and innovative neural network structures, including Recurrent Neural Networks (RNNs), Convolutional Neural Networks (CNNs), Transformers, Graph Neural Networks (GNNs), Generative Adversarial Networks (GANs), and Large Language Models (LLMs). It analyzes the application and achievements of these models in stock market forecasting. Moreover, the article also outlines the commonly used datasets and various evaluation metrics in the field of stock forecasting, further exploring unresolved issues and potential future research directions, aiming to provide clear guidance and reference for researchers in stock forecasting.}
+      \field{issn}{15662535}
+      \field{journaltitle}{Information Fusion}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{shorttitle}{Data-Driven Stock Forecasting Models Based on Neural Networks}
+      \field{title}{Data-Driven Stock Forecasting Models Based on Neural Networks: {{A}} Review}
+      \field{urlday}{3}
+      \field{urlmonth}{9}
+      \field{urlyear}{2025}
+      \field{volume}{113}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \field{pages}{102616}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.inffus.2024.102616
+      \endverb
+      \verb{file}
+      \verb C:\Users\kelia\Zotero\storage\8J347XHI\Bao et al. - 2025 - Data-driven stock forecasting models based on neural networks A review.pdf
+      \endverb
+    \endentry
+    \entry{seppLongShortTermMemory1997}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=04eada68a16530fa4c1afd560fd8f0f5}{%
+           family={Sepp},
+           familyi={S\bibinitperiod},
+           given={Hochreiter},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8ef97a7b28f19bae7caf32d516027cdd}{%
+           family={Jürgen},
+           familyi={J\bibinitperiod},
+           given={Schmidhuber},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \strng{fullhash}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \strng{fullhashraw}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \strng{bibnamehash}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \strng{authorbibnamehash}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \strng{authornamehash}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \strng{authorfullhash}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \strng{authorfullhashraw}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Neural Computation}
+      \field{series}{Massachusetts {{Institute}} of {{Technology}}}
+      \field{title}{Long {{Short-Term Memory}}}
+      \field{volume}{9}
+      \field{year}{1997}
+      \field{dateera}{ce}
+      \field{pages}{1735\bibrangedash 1780}
+      \range{pages}{46}
+      \verb{file}
+      \verb C:\Users\kelia\Zotero\storage\9VAAUCV5\Neural Computation Hochreiter (1997) Long Short-Term Memory.pdf
+      \endverb
+    \endentry
+    \entry{vaswaniAttentionAllYou2023}{misc}{}{}
+      \name{author}{8}{}{%
+        {{un=0,uniquepart=base,hash=7f28e84700536646dd6620a0db07ad09}{%
+           family={Vaswani},
+           familyi={V\bibinitperiod},
+           given={Ashish},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=62efade83d70f0323fe248755e6c90c5}{%
+           family={Shazeer},
+           familyi={S\bibinitperiod},
+           given={Noam},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=06649ebab1ea5cac0250746a19764975}{%
+           family={Parmar},
+           familyi={P\bibinitperiod},
+           given={Niki},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=831027ee0ebf22375e2a86afc1881909}{%
+           family={Uszkoreit},
+           familyi={U\bibinitperiod},
+           given={Jakob},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2fd2982e30ebcec93ec1cf76e0d797fd}{%
+           family={Jones},
+           familyi={J\bibinitperiod},
+           given={Llion},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=27b07e4eacbf4ef7a1438e3badb7dd8d}{%
+           family={Gomez},
+           familyi={G\bibinitperiod},
+           given={Aidan\bibnamedelima N.},
+           giveni={A\bibinitperiod\bibinitdelim N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f2bc899b1160163417da7bf510f15d33}{%
+           family={Kaiser},
+           familyi={K\bibinitperiod},
+           given={Lukasz},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=95595a0fefb86187cbc36e551017d332}{%
+           family={Polosukhin},
+           familyi={P\bibinitperiod},
+           given={Illia},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {arXiv}%
+      }
+      \strng{namehash}{ee273ab30cfb889666f8c4d806eb9ce7}
+      \strng{fullhash}{f82970bbd2bdd7a002d2af62b743d5cc}
+      \strng{fullhashraw}{f82970bbd2bdd7a002d2af62b743d5cc}
+      \strng{bibnamehash}{f82970bbd2bdd7a002d2af62b743d5cc}
+      \strng{authorbibnamehash}{f82970bbd2bdd7a002d2af62b743d5cc}
+      \strng{authornamehash}{ee273ab30cfb889666f8c4d806eb9ce7}
+      \strng{authorfullhash}{f82970bbd2bdd7a002d2af62b743d5cc}
+      \strng{authorfullhashraw}{f82970bbd2bdd7a002d2af62b743d5cc}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The dominant sequence transduction models are based on complex recurrent or convolutional neural networks in an encoder-decoder configuration. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.}
+      \field{eprintclass}{cs}
+      \field{eprinttype}{arXiv}
+      \field{month}{8}
+      \field{number}{arXiv:1706.03762}
+      \field{title}{Attention {{Is All You Need}}}
+      \field{urlday}{3}
+      \field{urlmonth}{9}
+      \field{urlyear}{2025}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.1706.03762
+      \endverb
+      \verb{eprint}
+      \verb 1706.03762
+      \endverb
+      \verb{file}
+      \verb C\:\\Users\\kelia\\Zotero\\storage\\DADKJ2NB\\Vaswani et al. - 2023 - Attention Is All You Need.pdf;C\:\\Users\\kelia\\Zotero\\storage\\ACQ3ZERK\\1706.html
+      \endverb
+      \keyw{Computer Science - Computation and Language,Computer Science - Machine Learning}
+    \endentry
+  \enddatalist
+  \datalist[entry]{apa/global//global/global/global}
+    \entry{baoDatadrivenStockForecasting2025}{article}{}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=027992604956cb6831be0d424c5690ff}{%
+           family={Bao},
+           familyi={B\bibinitperiod},
+           given={Wuzhida},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=178217f354e6ec5b9421573ae4bf6db1}{%
+           family={Cao},
+           familyi={C\bibinitperiod},
+           given={Yuting},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=dc9616dbd138c8816662e7a1bf22bc60}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Yin},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=726d83ed8a9d0db68eba23c55bdaa95d}{%
+           family={Che},
+           familyi={C\bibinitperiod},
+           given={Hangjun},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=98c67cf20f857391e8b210f5f20e88ef}{%
+           family={Huang},
+           familyi={H\bibinitperiod},
+           given={Junjian},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=49bf813761e5dac014173b6ab561913a}{%
+           family={Wen},
+           familyi={W\bibinitperiod},
+           given={Shiping},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{aad1876b14ac6b72f8046f2f50bdab13}
+      \strng{fullhash}{486761e51499d627ef8bd7fbbb3d3c72}
+      \strng{fullhashraw}{486761e51499d627ef8bd7fbbb3d3c72}
+      \strng{bibnamehash}{486761e51499d627ef8bd7fbbb3d3c72}
+      \strng{authorbibnamehash}{486761e51499d627ef8bd7fbbb3d3c72}
+      \strng{authornamehash}{aad1876b14ac6b72f8046f2f50bdab13}
+      \strng{authorfullhash}{486761e51499d627ef8bd7fbbb3d3c72}
+      \strng{authorfullhashraw}{486761e51499d627ef8bd7fbbb3d3c72}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{As a core branch of financial forecasting, stock forecasting plays a crucial role for financial analysts, investors, and policymakers in managing risks and optimizing investment strategies, significantly enhancing the efficiency and effectiveness of economic decision-making. With the rapid development of information technology and computer science, data-driven neural network technologies have increasingly become the mainstream method for stock forecasting. Although recent review studies have provided a basic introduction to deep learning methods, they still lack detailed discussion on network architecture design and innovative details. Additionally, the latest research on emerging large language models and neural network structures has yet to be included in existing review literature. In light of this, this paper comprehensively reviews the literature on datadriven neural networks in the field of stock forecasting from 2015 to 2023, discussing various classic and innovative neural network structures, including Recurrent Neural Networks (RNNs), Convolutional Neural Networks (CNNs), Transformers, Graph Neural Networks (GNNs), Generative Adversarial Networks (GANs), and Large Language Models (LLMs). It analyzes the application and achievements of these models in stock market forecasting. Moreover, the article also outlines the commonly used datasets and various evaluation metrics in the field of stock forecasting, further exploring unresolved issues and potential future research directions, aiming to provide clear guidance and reference for researchers in stock forecasting.}
+      \field{issn}{15662535}
+      \field{journaltitle}{Information Fusion}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{shorttitle}{Data-Driven Stock Forecasting Models Based on Neural Networks}
+      \field{title}{Data-Driven Stock Forecasting Models Based on Neural Networks: {{A}} Review}
+      \field{urlday}{3}
+      \field{urlmonth}{9}
+      \field{urlyear}{2025}
+      \field{volume}{113}
+      \field{year}{2025}
+      \field{urldateera}{ce}
+      \field{pages}{102616}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.inffus.2024.102616
+      \endverb
+      \verb{file}
+      \verb C:\Users\kelia\Zotero\storage\8J347XHI\Bao et al. - 2025 - Data-driven stock forecasting models based on neural networks A review.pdf
+      \endverb
+    \endentry
+    \entry{seppLongShortTermMemory1997}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=04eada68a16530fa4c1afd560fd8f0f5}{%
+           family={Sepp},
+           familyi={S\bibinitperiod},
+           given={Hochreiter},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8ef97a7b28f19bae7caf32d516027cdd}{%
+           family={Jürgen},
+           familyi={J\bibinitperiod},
+           given={Schmidhuber},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \strng{fullhash}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \strng{fullhashraw}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \strng{bibnamehash}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \strng{authorbibnamehash}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \strng{authornamehash}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \strng{authorfullhash}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \strng{authorfullhashraw}{7a4fae325d0fadb9f1f2074b79c671aa}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Neural Computation}
+      \field{series}{Massachusetts {{Institute}} of {{Technology}}}
+      \field{title}{Long {{Short-Term Memory}}}
+      \field{volume}{9}
+      \field{year}{1997}
+      \field{dateera}{ce}
+      \field{pages}{1735\bibrangedash 1780}
+      \range{pages}{46}
+      \verb{file}
+      \verb C:\Users\kelia\Zotero\storage\9VAAUCV5\Neural Computation Hochreiter (1997) Long Short-Term Memory.pdf
+      \endverb
+    \endentry
+    \entry{vaswaniAttentionAllYou2023}{misc}{}{}
+      \name{author}{8}{}{%
+        {{un=0,uniquepart=base,hash=7f28e84700536646dd6620a0db07ad09}{%
+           family={Vaswani},
+           familyi={V\bibinitperiod},
+           given={Ashish},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=62efade83d70f0323fe248755e6c90c5}{%
+           family={Shazeer},
+           familyi={S\bibinitperiod},
+           given={Noam},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=06649ebab1ea5cac0250746a19764975}{%
+           family={Parmar},
+           familyi={P\bibinitperiod},
+           given={Niki},
+           giveni={N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=831027ee0ebf22375e2a86afc1881909}{%
+           family={Uszkoreit},
+           familyi={U\bibinitperiod},
+           given={Jakob},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2fd2982e30ebcec93ec1cf76e0d797fd}{%
+           family={Jones},
+           familyi={J\bibinitperiod},
+           given={Llion},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=27b07e4eacbf4ef7a1438e3badb7dd8d}{%
+           family={Gomez},
+           familyi={G\bibinitperiod},
+           given={Aidan\bibnamedelima N.},
+           giveni={A\bibinitperiod\bibinitdelim N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f2bc899b1160163417da7bf510f15d33}{%
+           family={Kaiser},
+           familyi={K\bibinitperiod},
+           given={Lukasz},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=95595a0fefb86187cbc36e551017d332}{%
+           family={Polosukhin},
+           familyi={P\bibinitperiod},
+           given={Illia},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {arXiv}%
+      }
+      \strng{namehash}{ee273ab30cfb889666f8c4d806eb9ce7}
+      \strng{fullhash}{f82970bbd2bdd7a002d2af62b743d5cc}
+      \strng{fullhashraw}{f82970bbd2bdd7a002d2af62b743d5cc}
+      \strng{bibnamehash}{f82970bbd2bdd7a002d2af62b743d5cc}
+      \strng{authorbibnamehash}{f82970bbd2bdd7a002d2af62b743d5cc}
+      \strng{authornamehash}{ee273ab30cfb889666f8c4d806eb9ce7}
+      \strng{authorfullhash}{f82970bbd2bdd7a002d2af62b743d5cc}
+      \strng{authorfullhashraw}{f82970bbd2bdd7a002d2af62b743d5cc}
+      \field{sortinit}{V}
+      \field{sortinithash}{afb52128e5b4dc4b843768c0113d673b}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \true{uniqueprimaryauthor}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The dominant sequence transduction models are based on complex recurrent or convolutional neural networks in an encoder-decoder configuration. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature. We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.}
+      \field{eprintclass}{cs}
+      \field{eprinttype}{arXiv}
+      \field{month}{8}
+      \field{number}{arXiv:1706.03762}
+      \field{title}{Attention {{Is All You Need}}}
+      \field{urlday}{3}
+      \field{urlmonth}{9}
+      \field{urlyear}{2025}
+      \field{year}{2023}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.1706.03762
+      \endverb
+      \verb{eprint}
+      \verb 1706.03762
+      \endverb
+      \verb{file}
+      \verb C\:\\Users\\kelia\\Zotero\\storage\\DADKJ2NB\\Vaswani et al. - 2023 - Attention Is All You Need.pdf;C\:\\Users\\kelia\\Zotero\\storage\\ACQ3ZERK\\1706.html
+      \endverb
+      \keyw{Computer Science - Computation and Language,Computer Science - Machine Learning}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
