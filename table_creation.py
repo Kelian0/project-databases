@@ -42,7 +42,7 @@ def main():
 
     if db.check_table_exist(table_name="games") is None:
         db.execute("""CREATE TABLE games (
-                appid INT,
+                appID INT,
                 name VARCHAR(255) NOT NULL,
                 developerID INT NOT NULL,
                 release_date DATE NOT NULL,
@@ -58,7 +58,7 @@ def main():
                 positive INT,
                 negative INT,
                 average_playtime_forever INT,
-                PRIMARY KEY (appid),
+                PRIMARY KEY (appID),
                 FOREIGN KEY (developerID) REFERENCES developers(developerID),
                 CHECK (price >= 0),
         );""")
@@ -69,12 +69,12 @@ def main():
                 name VARCHAR(255) NOT NULL,
                 notable_games VARCHAR(255),
                 Notes VARCHAR(255),
-                CityID INT NOT NULL,
-                Country VARCHAR(255) NOT NULL,
+                cityID INT NOT NULL,
+                country VARCHAR(255) NOT NULL,
                 year INT,
                 PRIMARY KEY (developerID),
-                FOREIGN KEY (CityID) REFERENCES cities(...),
-                FOREIGN KEY (Country) REFERENCES countries(...)
+                FOREIGN KEY (cityID) REFERENCES cities(id),
+                FOREIGN KEY (country) REFERENCES countries(country)
         );""")
     
     if db.check_table_exist(table_name="cities") is None:
@@ -103,50 +103,66 @@ def main():
                    area INT,
                    pop_density NUMERIC(10,1),
                    coastline NUMERIC(10,2),
-                   net_migration,
                    infant_mortality,
-                   gpd,
-                   literacy,
                    phones,
                    arable,
                    crops,
                    other,
-                   climate,
                    birthrate,
                    deathrate,
                    agriculture,
                    industry,
-                   service
+                   service,
+                   PRIMARY KEY(country)
+        );""")
+
+    if db.check_table_exist(table_name="categories") is None:
+        db.execute("""CREATE TABLE categories (
+                    categoryID SERIAL,
+                    name VARCHAR(255),
+                    PRIMARY KEY (categoryID)
+        );""")
+
+    if db.check_table_exist(table_name="languages") is None:
+        db.execute("""CREATE TABLE  (
+                   languageID SERIAL,
+                   name VARCHAR(255),
+                   PRIMARY KEY(languageID)
 
         );""")
 
-    if db.check_table_exist(table_name="") is None:
-        db.execute("""CREATE TABLE  (
-
+    if db.check_table_exist(table_name="genres") is None:
+        db.execute("""CREATE TABLE genres (
+                   genreID SERIAL,
+                   name,
+                   PRIMARY KEY(genreID)
         );""")
 
-    if db.check_table_exist(table_name="") is None:
-        db.execute("""CREATE TABLE  (
-
+    if db.check_table_exist(table_name="game_categories") is None:
+        db.execute("""CREATE TABLE game_categories (
+                   appID INT,
+                   categoryID,
+                   PRIMARY KEY(appID,categoryID),
+                   FOREIGN KEY (appID) REFERENCES games(appID),
+                   FOREIGN KEY (categoryID) REFERENCES categories(categoryID)
         );""")
 
-    if db.check_table_exist(table_name="") is None:
-        db.execute("""CREATE TABLE  (
-
+    if db.check_table_exist(table_name="game_languages") is None:
+        db.execute("""CREATE TABLE game_languages (
+                   appID INT,
+                   languageID INT,
+                   PRIMARY KEY(appID,languageID),
+                   FOREIGN KEY (appID) REFERENCES games(appID),
+                   FOREIGN KEY (languageID) REFERENCES languages(languageID),
         );""")
 
-    if db.check_table_exist(table_name="") is None:
-        db.execute("""CREATE TABLE  (
-
-        );""")
-
-    if db.check_table_exist(table_name="") is None:
-        db.execute("""CREATE TABLE  (
-
-        );""")
-
-    if db.check_table_exist(table_name="") is None:
-        db.execute("""CREATE TABLE  (
+    if db.check_table_exist(table_name="game_genres") is None:
+        db.execute("""CREATE TABLE game_genres (
+                   appID INT,
+                   genreID INT,
+                   PRIMARY KEY(appID,genreID)
+                   FOREIGN KEY (appID) REFERENCES games(appID),
+                   FOREIGN KEY(genreID) REFERENCES genres(genreID)
 
         );""")
     
