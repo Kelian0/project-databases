@@ -39,7 +39,7 @@ def main():
     db = DBTM()
     # db.execute("""CREATE SCHEMA proj_db_kelian_clement;""")
     db.execute("""set search_path = 'proj_db_kelian_clement'""")
-
+    
     if db.check_table_exist(table_name="games") is None:
         db.execute("""CREATE TABLE games (
                 appID INT,
@@ -101,18 +101,18 @@ def main():
                    region VARCHAR(255),
                    population INT,
                    area INT,
-                   pop_density NUMERIC(10,1),
+                   pop_density NUMERIC(10,2),
                    coastline NUMERIC(10,2),
-                   infant_mortality,
-                   phones,
-                   arable,
-                   crops,
-                   other,
-                   birthrate,
-                   deathrate,
-                   agriculture,
-                   industry,
-                   service,
+                   infant_mortality NUMERIC(10,2),
+                   phones NUMERIC(10,2),
+                   arable NUMERIC(10,2),
+                   crops NUMERIC(10,2),
+                   other NUMERIC(10,2),
+                   birthrate NUMERIC(10,2),
+                   deathrate NUMERIC(10,2),
+                   agriculture NUMERIC(10,2),
+                   industry NUMERIC(10,2),
+                   service NUMERIC(10,2),
                    PRIMARY KEY(country)
         );""")
 
@@ -134,14 +134,14 @@ def main():
     if db.check_table_exist(table_name="genres") is None:
         db.execute("""CREATE TABLE genres (
                    genreID SERIAL,
-                   name,
+                   name VARCHAR(255),
                    PRIMARY KEY(genreID)
         );""")
 
     if db.check_table_exist(table_name="game_categories") is None:
         db.execute("""CREATE TABLE game_categories (
                    appID INT,
-                   categoryID,
+                   categoryID INT,
                    PRIMARY KEY(appID,categoryID),
                    FOREIGN KEY (appID) REFERENCES games(appID),
                    FOREIGN KEY (categoryID) REFERENCES categories(categoryID)
@@ -153,7 +153,7 @@ def main():
                    languageID INT,
                    PRIMARY KEY(appID,languageID),
                    FOREIGN KEY (appID) REFERENCES games(appID),
-                   FOREIGN KEY (languageID) REFERENCES languages(languageID),
+                   FOREIGN KEY (languageID) REFERENCES languages(languageID)
         );""")
 
     if db.check_table_exist(table_name="game_genres") is None:
@@ -167,17 +167,11 @@ def main():
         );""")
     
 
+    # db.execute("""INSERT INTO mel.municipalities VALUES ('009', 'Villeneuve-d''Ascq', '59009', '245900410', 27.56);""")
+    # db.execute("""INSERT INTO mel.municipalities VALUES ('013', 'Anstaing', '59013', '245900410', 2.30);""")
+
     # if db.check_table_exist(table_name="proj_db.games") is not None:
     #     db.execute("""DROP TABLE proj_db.games;""")
-
-    # if db.check_table_exist(table_name="mel.municipalities") is None:
-    #     db.execute("""CREATE TABLE mel.municipalities (
-    #         municipality character(3) NOT NULL,
-    #         name text NOT NULL,
-    #         insee character(5) NOT NULL,
-    #         epci character(9),
-    #         area numeric(4,2)
-    #     );""")
 
     #     db.execute("""COMMENT ON COLUMN mel.municipalities.municipality IS 'code municipality sur 3 caractères';""")
     #     db.execute("""COMMENT ON COLUMN mel.municipalities.name IS 'name de la municipality';""")
@@ -185,21 +179,8 @@ def main():
     #     db.execute("""COMMENT ON COLUMN mel.municipalities.epci IS 'code de l''EPCI (MEL) sur 9 caractères';""")
     #     db.execute("""COMMENT ON COLUMN mel.municipalities.area IS 'area, en km2';""")
 
-    # db.execute("""INSERT INTO mel.municipalities VALUES ('009', 'Villeneuve-d''Ascq', '59009', '245900410', 27.56);""")
-    # db.execute("""INSERT INTO mel.municipalities VALUES ('013', 'Anstaing', '59013', '245900410', 2.30);""")
-
     # db.execute("""ALTER TABLE ONLY mel.municipalities
     #             ADD CONSTRAINT municipalities_pkey PRIMARY KEY (insee);""")
-    
-    # db.execute("""ALTER TABLE ONLY mel.pollutants
-    #             ADD CONSTRAINT pollutants_pkey PRIMARY KEY (code_pollutant);""")
-
-    # db.execute("""ALTER TABLE ONLY mel.population
-    #             ADD CONSTRAINT population_pkey PRIMARY KEY (insee, census);""")
-
-    # db.execute("""ALTER TABLE ONLY mel.population
-    #             ADD CONSTRAINT population_insee_fkey FOREIGN KEY (insee) REFERENCES mel.municipalities(insee);""")
-
 
 
 
