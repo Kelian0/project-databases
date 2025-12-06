@@ -90,13 +90,33 @@ def main():
                    iso3 VARCHAR(3) NOT NULL,
                    admin_name VARCHAR(255),
                    capital admin_cat,
-                   population FLOAT,
+                   population INT,
                    PRIMARY KEY (id),
                    FOREIGN KEY (country) REFERENCES countries(...)
         );""")
     
-    if db.check_table_exist(table_name="") is None:
-        db.execute("""CREATE TABLE  (
+    if db.check_table_exist(table_name="countries") is None:
+        db.execute("""CREATE TABLE countries (
+                   country VARCHAR(255) NOT NULL,
+                   region VARCHAR(255),
+                   population INT,
+                   area INT,
+                   pop_density NUMERIC(10,1),
+                   coastline NUMERIC(10,2),
+                   net_migration,
+                   infant_mortality,
+                   gpd,
+                   literacy,
+                   phones,
+                   arable,
+                   crops,
+                   other,
+                   climate,
+                   birthrate,
+                   deathrate,
+                   agriculture,
+                   industry,
+                   service
 
         );""")
 
