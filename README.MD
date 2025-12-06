@@ -31,7 +31,7 @@ Put all the csv files in a **Data** folder
 >https://huggingface.co/datasets/FronkonGames/steam-games-dataset
 
 >Country: <br>
->https://www.kaggle.com/datasets/manusmitajha/countrydatacsv
+>https://github.com/bnokoro/Data-Science/blob/master/countries%20of%20the%20world.csv
 
 >Cities: <br>
 >https://www.kaggle.com/datasets/juanmah/world-cities
