@@ -3,6 +3,7 @@ from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.exc import IntegrityError
 import os
 from dotenv import load_dotenv
+import pandas as pd
 
 load_dotenv()  # take environment variables from .env.
 
@@ -22,6 +23,12 @@ class DBTM():
                 conn.commit()
             except IntegrityError:
                 print("Alredy there")
+    
+    def read_sql_df(self, query):
+        with self.engine.connect() as conn:
+            df = pd.read_sql_query(text(query), conn)
+
+        return df
 
     def check_table_exist(self, table_name):
         with self.engine.connect() as conn:
@@ -30,81 +37,102 @@ class DBTM():
 
 def main():
     db = DBTM()
+    # db.execute("""CREATE SCHEMA proj_db_kelian_clement;""")
+    db.execute("""set search_path = 'proj_db_kelian_clement'""")
 
-    db.execute("""CREATE SCHEMA proj_db;""")
-
-    if db.check_table_exist(table_name="proj_db.games") is None:
-        db.execute("""CREATE TABLE proj_db.games (
-            appID,
-            name,
-            release_date, 
-            estimated_owners,
-            required_age,
-            price,
-            DLCcount,
-            about_the_game,
-            supported_languages,
-            windows,
-            mac,
-            linux,
-            metacritic_score,
-            user_score,
-            positive,
-            negativ,
-            achievements,
-            average_playtime_forever,
-            developers,
-            publisher,
-            categories,
-            genres,
-            tags,
+    if db.check_table_exist(table_name="games") is None:
+        db.execute("""CREATE TABLE games (
+                appid INT,
+                name VARCHAR(255) NOT NULL,
+                developerID INT NOT NULL,
+                release_date DATE NOT NULL,
+                required_age INT,
+                price NUMERIC(6,2),
+                DLCcount INT,
+                windows BOOLEAN,
+                mac BOOLEAN,
+                linux BOOLEAN, 
+                achievements INT,
+                estimated_owners VARCHAR(50),
+                metacritic_score INT,
+                positive INT,
+                negative INT,
+                average_playtime_forever INT,
+                PRIMARY KEY (appid),
+                FOREIGN KEY (developerID) REFERENCES developers(developerID),
+                CHECK (price >= 0),
         );""")
 
-    db.execute("""COMMENT ON COLUMN proj_db.games.appID IS 'AppID, unique identifier for each app';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.name IS 'Game name';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.release_date IS 'Release date';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.estimated_owners IS 'Estimated owners (string, e.g.: 0 - 20000)';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.required_age IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.price IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.DLCcount IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.about_the_game IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.supported_languages IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.windows IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.mac IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.linux IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.linux IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.metacritic_score IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.user_score IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.positive IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.negativ IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.achievements IS '';""")    
-    db.execute("""COMMENT ON COLUMN proj_db.games.average_playtime_forever IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.developers IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.publisher IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.categories IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.genres IS '';""")
-    db.execute("""COMMENT ON COLUMN proj_db.games.tags IS '';""")
+    if db.check_table_exist(table_name="developers") is None:
+        db.execute("""CREATE TABLE developers (
+                developerID INT,
+                name VARCHAR(255) NOT NULL,
+                notable_games VARCHAR(255),
+                Notes VARCHAR(255),
+                CityID INT NOT NULL,
+                Country VARCHAR(255) NOT NULL,
+                year INT,
+                PRIMARY KEY (developerID),
+                FOREIGN KEY (CityID) REFERENCES cities(...),
+                FOREIGN KEY (Country) REFERENCES countries(...)
+        );""")
+    
+    if db.check_table_exist(table_name="cities") is None:
+        db.execute("""CREATE TYPE admin_cat AS ENUM ('primary', 'admin', 'minor'); """)
+        db.execute("""CREATE TABLE cities (
+                   id INT,
+                   city VARCHAR(255) NOT NULL,
+                   city_ascii VARCHAR(255) NOT NULL,
+                   lat NUMERIC(10,7),
+                   lng NUMERIC(10,7),
+                   country VARCHAR(255) NOT NULL,
+                   iso2 VARCHAR(2) NOT NULL,
+                   iso3 VARCHAR(3) NOT NULL,
+                   admin_name VARCHAR(255),
+                   capital admin_cat,
+                   population FLOAT,
+                   PRIMARY KEY (id),
+                   FOREIGN KEY (country) REFERENCES countries(...)
+        );""")
+    
+    if db.check_table_exist(table_name="") is None:
+        db.execute("""CREATE TABLE  (
 
-
-    if db.check_table_exist(table_name="proj_db.countries") is None:
-        db.execute("""CREATE TABLE proj_db.games (
-            #TO DO
         );""")
 
-    if db.check_table_exist(table_name="proj_db.indies") is None:
-        db.execute("""CREATE TABLE proj_db.games (
-            #TO DO
+    if db.check_table_exist(table_name="") is None:
+        db.execute("""CREATE TABLE  (
+
         );""")
 
-    if db.check_table_exist(table_name="proj_db.studios") is None:
-        db.execute("""CREATE TABLE proj_db.games (
-            #TO DO
+    if db.check_table_exist(table_name="") is None:
+        db.execute("""CREATE TABLE  (
+
         );""")
 
-    if db.check_table_exist(table_name="proj_db.cities") is None:
-        db.execute("""CREATE TABLE proj_db.games (
-            #TO DO
+    if db.check_table_exist(table_name="") is None:
+        db.execute("""CREATE TABLE  (
+
         );""")
+
+    if db.check_table_exist(table_name="") is None:
+        db.execute("""CREATE TABLE  (
+
+        );""")
+
+    if db.check_table_exist(table_name="") is None:
+        db.execute("""CREATE TABLE  (
+
+        );""")
+
+    if db.check_table_exist(table_name="") is None:
+        db.execute("""CREATE TABLE  (
+
+        );""")
+    
+
+    # if db.check_table_exist(table_name="proj_db.games") is not None:
+    #     db.execute("""DROP TABLE proj_db.games;""")
 
     # if db.check_table_exist(table_name="mel.municipalities") is None:
     #     db.execute("""CREATE TABLE mel.municipalities (
