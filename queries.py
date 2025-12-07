@@ -74,7 +74,7 @@ def main():
     print()
     
 
-    print("Game")
+    print("All game with a metacritic score after 2020")
     df = db.read_sql_df(
     """SELECT name, release_date, metacritic_score
     FROM games
@@ -111,6 +111,34 @@ def main():
             ON table_genre_maxtime.genreid = gg.genreid AND table_genre_maxtime.max_time_played = g.average_playtime_forever
     GROUP BY ge.name
     ORDER BY "Time played" DESC;
+    """)
+    print(df.to_markdown(index=False))
+    print()
+
+    print("Top 3 games in 2020 which has at least 3 supported languages")
+    df = db.read_sql_df(
+    """SELECT ga.name as "Game name", ga.metacritic_score as , COUNT(gl.languageID) AS "language count"
+    FROM games ga
+    JOIN game_languages AS gl USING (gl.appID)
+    WHERE YEAR(ga.release_date) = 2020
+    GROUP BY ga.appID
+    HAVING COUNT(gl.languageID) >= 3
+    ORDER BY ga.metacritic_score DESC
+    LIMIT 3;
+    """)
+    print(df.to_markdown(index=False))
+    print()
+
+    print("Average games prices and notable games for each studio in Tokyo or New York or Montréal")
+    df = db.read_sql_df(
+    """SELECT AVG(ga.price) as "average price", s.notable_games as "notable games", s.name as "studio name", ci.iso3 as country
+    FROM games ga
+    JOIN studios AS s USING(s.studioid)
+    JOIN cities AS ci USING(cityid)
+    GROUP BY s.studioid
+    HAVING ci.city = "Tokyo" OR ci.city = "New York" OR ci.city = "Montréal"
+    ORDER BY "average price"
+    LIMIT 20;
     """)
     print(df.to_markdown(index=False))
     print()
