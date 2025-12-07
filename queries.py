@@ -41,15 +41,45 @@ def main():
     db.execute("""set search_path = 'proj_db_kelian_clement'""")
 
 
-    # # Q1.10 (2)
-    # print("Q1.10 (2)")
-    # df = db.read_sql_df(
-    # """SELECT cyclists.bib, name
-    #     FROM cyclists LEFT JOIN visits ON cyclists.bib = visits.bib
-    #     WHERE visit_date IS NULL
-    #     ORDER BY bib;""")
-    # print(df.to_markdown(index=False))
-    # print()
+    print("Free Games ")
+    df = db.read_sql_df(
+    """SELECT name
+    FROM games
+    WHERE price = 0;
+    """)
+    print(df.to_markdown(index=False))
+    print()
+
+    print("Games sorted by price ")
+    df = db.read_sql_df(
+    """SELECT name, price
+    FROM games
+    ORDER BY price DESC;
+
+    """)
+    print(df.to_markdown(index=False))
+    print()
+
+    print("number of games by genre ")
+    df = db.read_sql_df(
+    """SELECT ge.name, COUNT(*) AS "nb of game"
+    FROM genres ge
+    JOIN game_genres gg ON ge.genreID = gg.genreID
+    GROUP BY ge.genreID;
+    """)
+    print(df.to_markdown(index=False))
+    print()
+    
+
+    print("Game ")
+    df = db.read_sql_df(
+    """SELECT name, release_date, metacritic_score
+    FROM games
+    WHERE release_date >= '2020-01-01'
+    AND metacritic_score IS NOT NULL;
+    """)
+    print(df.to_markdown(index=False))
+    print()
 
 
 if __name__ == '__main__':
