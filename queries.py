@@ -86,6 +86,36 @@ def main():
     print(df.to_markdown(index=False))
     print()
 
+    print("Number of studios for each country")
+    df = db.read_sql_df(
+    """SELECT country, COUNT(*) AS nb_stud
+    FROM developers
+    GROUP BY country
+    ORDER BY nb_stud DESC
+    LIMIT 10;
+    """)
+    print(df.to_markdown(index=False))
+    print()
+
+    print("The most played game and the least played game for each categories")
+    df = db.read_sql_df(
+    """SELECT c.name , ga.name as "the most played game", MAX(ga.average_playtime_forever) as "time played"
+    FROM games ga
+    JOIN game_categories as gc ON gc.appid = ga.appid
+    JOIN categories as c ON c.categoryid = gc.categoryid
+    GROUP BY c.name
+
+    UNION 
+
+    SELECT c.name as category, ga.name as "the least played game", MIN(ga.average_playtime_forever) as "time played"
+    FROM games ga
+    JOIN game_categories as gc ON gc.appid = ga.appid
+    JOIN categories as c ON c.categoryid = gc.categoryid
+    GROUP BY c.name
+    """)
+    print(df.to_markdown(index=False))
+    print()
+
 
 if __name__ == '__main__':
     main()
