@@ -44,10 +44,9 @@ def main():
         db.execute("""CREATE TABLE games (
                 appID INT,
                 name VARCHAR(255) NOT NULL,
-                developerID INT NOT NULL,
                 release_date DATE NOT NULL,
                 required_age INT,
-                price NUMERIC(6,2),
+                price NUMERIC(6,2) NOT NULL,
                 DLCcount INT,
                 windows BOOLEAN,
                 mac BOOLEAN,
@@ -59,13 +58,12 @@ def main():
                 negative INT,
                 average_playtime_forever INT,
                 PRIMARY KEY (appID),
-                FOREIGN KEY (developerID) REFERENCES developers(developerID),
                 CHECK (price >= 0),
         );""")
 
-    if db.check_table_exist(table_name="developers") is None:
-        db.execute("""CREATE TABLE developers (
-                developerID INT,
+    if db.check_table_exist(table_name="Studios") is None:
+        db.execute("""CREATE TABLE Studios (
+                studioID INT,
                 name VARCHAR(255) NOT NULL,
                 notable_games VARCHAR(255),
                 Notes VARCHAR(255),
@@ -73,8 +71,8 @@ def main():
                 country VARCHAR(255) NOT NULL,
                 year INT,
                 PRIMARY KEY (developerID),
-                FOREIGN KEY (cityID) REFERENCES cities(id),
-                FOREIGN KEY (country) REFERENCES countries(country)
+                FOREIGN KEY (cityID) REFERENCES cities(id) ON DELETE CASCADE,
+                FOREIGN KEY (country) REFERENCES countries(country) ON DELETE CASCADE
         );""")
     
     if db.check_table_exist(table_name="cities") is None:
@@ -92,11 +90,12 @@ def main():
                    capital admin_cat,
                    population INT,
                    PRIMARY KEY (id),
-                   FOREIGN KEY (country) REFERENCES countries(...)
+                   FOREIGN KEY (country) REFERENCES countries(country_ID) ON DELETE CASCADE
         );""")
     
     if db.check_table_exist(table_name="countries") is None:
         db.execute("""CREATE TABLE countries (
+                   country_ID SERIAL
                    country VARCHAR(255) NOT NULL,
                    region VARCHAR(255),
                    population INT,
@@ -113,7 +112,7 @@ def main():
                    agriculture NUMERIC(10,2),
                    industry NUMERIC(10,2),
                    service NUMERIC(10,2),
-                   PRIMARY KEY(country)
+                   PRIMARY KEY(country_ID)
         );""")
 
     if db.check_table_exist(table_name="categories") is None:
@@ -143,8 +142,8 @@ def main():
                    appID INT,
                    categoryID INT,
                    PRIMARY KEY(appID,categoryID),
-                   FOREIGN KEY (appID) REFERENCES games(appID),
-                   FOREIGN KEY (categoryID) REFERENCES categories(categoryID)
+                   FOREIGN KEY (appID) REFERENCES games(appID) ON DELETE CASCADE,
+                   FOREIGN KEY (categoryID) REFERENCES categories(categoryID) ON DELETE CASCADE
         );""")
 
     if db.check_table_exist(table_name="game_languages") is None:
@@ -152,17 +151,27 @@ def main():
                    appID INT,
                    languageID INT,
                    PRIMARY KEY(appID,languageID),
-                   FOREIGN KEY (appID) REFERENCES games(appID),
-                   FOREIGN KEY (languageID) REFERENCES languages(languageID)
+                   FOREIGN KEY (appID) REFERENCES games(appID) ON DELETE CASCADE,
+                   FOREIGN KEY (languageID) REFERENCES languages(languageID) ON DELETE CASCADE
         );""")
 
     if db.check_table_exist(table_name="game_genres") is None:
         db.execute("""CREATE TABLE game_genres (
                    appID INT,
                    genreID INT,
-                   PRIMARY KEY(appID,genreID)
-                   FOREIGN KEY (appID) REFERENCES games(appID),
-                   FOREIGN KEY(genreID) REFERENCES genres(genreID)
+                   PRIMARY KEY(appID,genreID),
+                   FOREIGN KEY (appID) REFERENCES games(appID) ON DELETE CASCADE,
+                   FOREIGN KEY(genreID) REFERENCES genres(genreID) ON DELETE CASCADE
+
+        );""")
+
+    if db.check_table_exist(table_name="To_develop") is None:
+        db.execute("""CREATE TABLE To_develop (
+                game INT,
+                studio INT,
+                PRIMARY KEY(game,studio),
+                FOREIGN KEY (game) REFERENCES games(appID) ON DELETE CASCADE,
+                FOREIGN KEY(studio) REFERENCES genres(studioID) ON DELETE CASCADE
 
         );""")
     
