@@ -4,6 +4,7 @@ from sqlalchemy.exc import IntegrityError
 import os
 from dotenv import load_dotenv
 import pandas as pd
+import csv
 
 load_dotenv()  # take environment variables from .env.
 
@@ -23,11 +24,21 @@ class DBTM():
                 conn.commit()
             except IntegrityError:
                 print("Alredy there")
-    
+
+    def insert_df(self, df, table_name, if_exists='append'):
+            with self.engine.connect() as conn:
+                try: 
+                    df.to_sql(table_name, con=conn, if_exists=if_exists, index=False)
+                    conn.commit()
+                except IntegrityError as e:
+                    print(e.orig)
+                    
+
+
+
     def read_sql_df(self, query):
         with self.engine.connect() as conn:
             df = pd.read_sql_query(text(query), conn)
-
         return df
 
     def check_table_exist(self, table_name):
@@ -39,63 +50,13 @@ def main():
     db = DBTM()
     # db.execute("""CREATE SCHEMA proj_db_kelian_clement;""")
     db.execute("""set search_path = 'proj_db_kelian_clement'""")
-    
-    if db.check_table_exist(table_name="games") is None:
-        db.execute("""CREATE TABLE games (
-                appID INT,
-                name VARCHAR(255) NOT NULL,
-                studioID INT,
-                release_date DATE NOT NULL,
-                required_age INT,
-                price NUMERIC(6,2) NOT NULL,
-                DLCcount INT,
-                windows BOOLEAN,
-                mac BOOLEAN,
-                linux BOOLEAN, 
-                achievements INT,
-                estimated_owners VARCHAR(50),
-                metacritic_score INT,
-                positive INT,
-                negative INT,
-                average_playtime_forever INT,
-                PRIMARY KEY (appID),
-                CHECK (price >= 0)
-        );""")
 
-    if db.check_table_exist(table_name="Studios") is None:
-        db.execute("""CREATE TABLE Studios (
-                studioID SERIAL,
-                name VARCHAR(255) NOT NULL,
-                notable_games VARCHAR(255),
-                Notes VARCHAR(255),
-                cityID INT NOT NULL,
-                countryID INT NOT NULL,
-                year INT,
-                PRIMARY KEY (developerID),
-                FOREIGN KEY (cityID) REFERENCES cities(id) ON DELETE CASCADE,
-                FOREIGN KEY (countryID) REFERENCES countries(countryID) ON DELETE CASCADE
-        );""")
-    
-    if db.check_table_exist(table_name="cities") is None:
-        db.execute("""CREATE TYPE admin_cat AS ENUM ('primary', 'admin', 'minor'); """)
-        db.execute("""CREATE TABLE cities (
-                   id INT,
-                   city VARCHAR(255) NOT NULL,
-                   city_ascii VARCHAR(255) NOT NULL,
-                   lat NUMERIC(10,7),
-                   lng NUMERIC(10,7),
-                   country VARCHAR(255) NOT NULL,
-                   iso2 VARCHAR(2) NOT NULL,
-                   iso3 VARCHAR(3) NOT NULL,
-                   admin_name VARCHAR(255),
-                   capital admin_cat,
-                   population INT,
-                   PRIMARY KEY (id),
-        );""")
-    
+    # db.execute("""DROP TABLE cities CASCADE;""")
+    # db.execute("""DROP TABLE games CASCADE;""")
+
     if db.check_table_exist(table_name="countries") is None:
         db.execute("""CREATE TABLE countries (
-                   countryID SERIAL,
+                   countryid SERIAL,
                    country VARCHAR(255) NOT NULL,
                    region VARCHAR(255),
                    population INT,
@@ -112,65 +73,259 @@ def main():
                    agriculture NUMERIC(10,2),
                    industry NUMERIC(10,2),
                    service NUMERIC(10,2),
-                   PRIMARY KEY(country_ID)
+                   PRIMARY KEY(countryid)
         );""")
+
+    if db.check_table_exist(table_name="cities") is None:
+        # db.execute("""CREATE TYPE admin_cat AS ENUM ('primary', 'admin', 'minor'); """)
+        db.execute("""CREATE TABLE cities (
+                   id INT,
+                   city VARCHAR(255) NOT NULL,
+                   city_ascii VARCHAR(255),
+                   lat NUMERIC(10,7),
+                   lng NUMERIC(10,7),
+                   countryid INT NOT NULL,
+                   iso2 VARCHAR(2),
+                   iso3 VARCHAR(3),
+                   admin_name VARCHAR(255),
+                   capital admin_cat,
+                   population INT,
+                   PRIMARY KEY (id),
+                   FOREIGN KEY (countryid) REFERENCES countries(countryid) ON DELETE CASCADE
+
+        );""")
+
+
+    if db.check_table_exist(table_name="studios") is None:
+        db.execute("""CREATE TABLE studios (
+                studioid SERIAL,
+                name VARCHAR(255) NOT NULL,
+                notable_games TEXT,
+                notes TEXT,
+                cityid INT NOT NULL,
+                countryid INT NOT NULL,
+                year INT,
+                PRIMARY KEY (studioid),
+                FOREIGN KEY (cityid) REFERENCES cities(id) ON DELETE CASCADE,
+                FOREIGN KEY (countryid) REFERENCES countries(countryid) ON DELETE CASCADE
+        );""")
+    
+    if db.check_table_exist(table_name="games") is None:
+        db.execute("""CREATE TABLE games (
+                appid INT,
+                name VARCHAR(255) NOT NULL,
+                studioid INT,
+                release_date DATE NOT NULL,
+                required_age INT,
+                price NUMERIC(6,2) NOT NULL,
+                DLCcount INT,
+                windows BOOLEAN,
+                mac BOOLEAN,
+                linux BOOLEAN, 
+                achievements INT,
+                estimated_owners VARCHAR(50),
+                metacritic_score INT,
+                positive INT,
+                negative INT,
+                average_playtime_forever INT,
+                PRIMARY KEY (appid),
+                FOREIGN KEY (studioid) REFERENCES studios(studioid) ON DELETE CASCADE,
+                CHECK (price >= 0)
+        );""")
+    
 
     if db.check_table_exist(table_name="categories") is None:
         db.execute("""CREATE TABLE categories (
-                    categoryID SERIAL,
+                    categoryid SERIAL,
                     name VARCHAR(255),
-                    PRIMARY KEY (categoryID)
+                    PRIMARY KEY (categoryid)
         );""")
 
     if db.check_table_exist(table_name="languages") is None:
-        db.execute("""CREATE TABLE  (
-                   languageID SERIAL,
+        db.execute("""CREATE TABLE languages (
+                   languageid SERIAL,
                    name VARCHAR(255),
-                   PRIMARY KEY(languageID)
+                   PRIMARY KEY(languageid)
 
         );""")
 
     if db.check_table_exist(table_name="genres") is None:
         db.execute("""CREATE TABLE genres (
-                   genreID SERIAL,
+                   genreid SERIAL,
                    name VARCHAR(255),
-                   PRIMARY KEY(genreID)
+                   PRIMARY KEY(genreid)
         );""")
 
     if db.check_table_exist(table_name="game_categories") is None:
         db.execute("""CREATE TABLE game_categories (
-                   appID INT,
-                   categoryID INT,
-                   PRIMARY KEY(appID,categoryID),
-                   FOREIGN KEY (appID) REFERENCES games(appID) ON DELETE CASCADE,
-                   FOREIGN KEY (categoryID) REFERENCES categories(categoryID) ON DELETE CASCADE
+                   appid INT,
+                   categoryid INT,
+                   PRIMARY KEY(appid,categoryid),
+                   FOREIGN KEY (appid) REFERENCES games(appid) ON DELETE CASCADE,
+                   FOREIGN KEY (categoryid) REFERENCES categories(categoryid) ON DELETE CASCADE
         );""")
 
     if db.check_table_exist(table_name="game_languages") is None:
         db.execute("""CREATE TABLE game_languages (
-                   appID INT,
-                   languageID INT,
-                   PRIMARY KEY(appID,languageID),
-                   FOREIGN KEY (appID) REFERENCES games(appID) ON DELETE CASCADE,
-                   FOREIGN KEY (languageID) REFERENCES languages(languageID) ON DELETE CASCADE
+                   appid INT,
+                   languageid INT,
+                   PRIMARY KEY(appid,languageid),
+                   FOREIGN KEY (appid) REFERENCES games(appid) ON DELETE CASCADE,
+                   FOREIGN KEY (languageid) REFERENCES languages(languageid) ON DELETE CASCADE
         );""")
 
     if db.check_table_exist(table_name="game_genres") is None:
         db.execute("""CREATE TABLE game_genres (
-                   appID INT,
-                   genreID INT,
-                   PRIMARY KEY(appID,genreID),
-                   FOREIGN KEY (appID) REFERENCES games(appID) ON DELETE CASCADE,
-                   FOREIGN KEY(genreID) REFERENCES genres(genreID) ON DELETE CASCADE
+                   appid INT,
+                   genreid INT,
+                   PRIMARY KEY(appid,genreid),
+                   FOREIGN KEY (appid) REFERENCES games(appid) ON DELETE CASCADE,
+                   FOREIGN KEY(genreid) REFERENCES genres(genreid) ON DELETE CASCADE
 
         );""")
+
     
+    
+    db.execute("""ALTER TABLE studios ALTER COLUMN cityid DROP NOT NULL;""")
+    db.execute("""ALTER TABLE studios ALTER COLUMN countryid DROP NOT NULL;""")
 
-    # db.execute("""INSERT INTO mel.municipalities VALUES ('009', 'Villeneuve-d''Ascq', '59009', '245900410', 27.56);""")
-    # db.execute("""INSERT INTO mel.municipalities VALUES ('013', 'Anstaing', '59013', '245900410', 2.30);""")
+    db.execute("""ALTER TABLE games ALTER COLUMN release_date DROP NOT NULL;""")
 
-    # if db.check_table_exist(table_name="proj_db.games") is not None:
-    #     db.execute("""DROP TABLE proj_db.games;""")
+
+
+#============================================================================
+    df_countries = pd.read_csv("Data/Clean_Data/countries.csv",sep=",")
+    db.insert_df(df_countries, 'countries', if_exists='append')
+
+    print("Test countries ")
+    df = db.read_sql_df(
+    """SELECT *
+    FROM countries
+    LIMIT 5;
+    """)
+    print(df.to_markdown(index=False))
+    print()
+
+
+#============================================================================
+    df_cities = pd.read_csv("Data/Clean_Data/cities.csv",sep=",")
+    db.insert_df(df_cities, 'cities', if_exists='append')
+
+    print("Test cities ")
+    df = db.read_sql_df(
+    """SELECT *
+    FROM cities
+    LIMIT 5;
+    """)
+    print(df.to_markdown(index=False))
+    print()
+
+#============================================================================
+    df_studios = pd.read_csv("Data/Clean_Data/studios.csv",sep=",")
+    db.insert_df(df_studios, 'studios', if_exists='append')
+
+    print("Test studios ")
+    df = db.read_sql_df(
+    """SELECT *
+    FROM studios
+    LIMIT 5;
+    """)
+    print(df.to_markdown(index=False))
+    print()
+
+
+#============================================================================
+    df_games = pd.read_csv("Data/Clean_Data/games.csv",sep=",")
+    db.insert_df(df_games, 'games', if_exists='append')
+
+    print("Test games ")
+    df = db.read_sql_df(
+    """SELECT *
+    FROM games
+    LIMIT 5;
+    """)
+    print(df.to_markdown(index=False))
+    print()
+
+#============================================================================
+    df_categories = pd.read_csv("Data/Clean_Data/categories.csv",sep=",")
+    db.insert_df(df_categories, 'categories', if_exists='append')
+
+    print("Test categories ")
+    df = db.read_sql_df(
+    """SELECT *
+    FROM categories
+    LIMIT 5;
+    """)
+    print(df.to_markdown(index=False))
+    print()
+
+#============================================================================
+    df_languages = pd.read_csv("Data/Clean_Data/languages.csv",sep=",")
+    db.insert_df(df_languages, 'languages', if_exists='append')
+
+    print("Test languages ")
+    df = db.read_sql_df(
+    """SELECT *
+    FROM languages
+    LIMIT 5;
+    """)
+    print(df.to_markdown(index=False))
+    print()
+
+
+#============================================================================
+    df_genres = pd.read_csv("Data/Clean_Data/genres.csv",sep=",")
+    db.insert_df(df_genres, 'genres', if_exists='append')
+
+    print("Test genres ")
+    df = db.read_sql_df(
+    """SELECT *
+    FROM genres
+    LIMIT 5;
+    """)
+    print(df.to_markdown(index=False))
+    print()
+
+#============================================================================
+    df_game_categories = pd.read_csv("Data/Clean_Data/game_categories.csv",sep=",")
+    db.insert_df(df_game_categories, 'game_categories', if_exists='append')
+
+    print("Test game_categories ")
+    df = db.read_sql_df(
+    """SELECT *
+    FROM game_categories
+    LIMIT 5;
+    """)
+    print(df.to_markdown(index=False))
+    print()
+
+
+#============================================================================
+    df_game_languages = pd.read_csv("Data/Clean_Data/game_languages.csv",sep=",")
+    db.insert_df(df_game_languages, 'game_languages', if_exists='append')
+
+    print("Test game_languages ")
+    df = db.read_sql_df(
+    """SELECT *
+    FROM game_languages
+    LIMIT 5;
+    """)
+    print(df.to_markdown(index=False))
+    print()
+
+#============================================================================
+    df_game_genres = pd.read_csv("Data/Clean_Data/game_genres.csv",sep=",")
+    db.insert_df(df_game_genres, 'game_genres', if_exists='append')
+
+    print("Test game_genres ")
+    df = db.read_sql_df(
+    """SELECT *
+    FROM game_genres
+    LIMIT 5;
+    """)
+    print(df.to_markdown(index=False))
+    print()
 
     #     db.execute("""COMMENT ON COLUMN mel.municipalities.municipality IS 'code municipality sur 3 caractères';""")
     #     db.execute("""COMMENT ON COLUMN mel.municipalities.name IS 'name de la municipality';""")
