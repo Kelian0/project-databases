@@ -45,7 +45,8 @@ def main():
     df = db.read_sql_df(
     """SELECT name
     FROM games
-    WHERE price = 0;
+    WHERE price = 0
+    LIMIT 10;
     """)
     print(df.to_markdown(index=False))
     print()
@@ -54,8 +55,8 @@ def main():
     df = db.read_sql_df(
     """SELECT name, price
     FROM games
-    ORDER BY price DESC;
-
+    ORDER BY price DESC
+    LIMIT 10;
     """)
     print(df.to_markdown(index=False))
     print()
@@ -65,7 +66,9 @@ def main():
     """SELECT ge.name, COUNT(*) AS "nb of game"
     FROM genres ge
     JOIN game_genres gg ON ge.genreID = gg.genreID
-    GROUP BY ge.genreID;
+    GROUP BY ge.genreID
+    ORDER BY "nb of game" DESC
+    LIMIT 10;
     """)
     print(df.to_markdown(index=False))
     print()
@@ -76,7 +79,9 @@ def main():
     """SELECT name, release_date, metacritic_score
     FROM games
     WHERE release_date >= '2020-01-01'
-    AND metacritic_score IS NOT NULL;
+    AND metacritic_score > 0
+    ORDER BY metacritic_score DESC
+    LIMIT 10;
     """)
     print(df.to_markdown(index=False))
     print()
