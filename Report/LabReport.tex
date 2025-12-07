@@ -109,7 +109,8 @@ The csv file contains the following atributes:
 
 Frist manual cleaning (87 lines) was done on video-games-developers.csv to match the other datasets.
 Especially the \textbf{City} and \textbf{Country} columns, which contain non standard names. 
-You can find all the manual modification in the modif\_video\_game\_studio.json file.
+You can find all the manual modification in the modif\_video\_game\_studio.json file. We also add 
+a new column called \textbf{DeveloperID} to be the primary key of the table.
 
 \begin{figure}[h]
 \centering
@@ -125,7 +126,8 @@ You can find all the manual modification in the modif\_video\_game\_studio.json 
 Then a DeveloperID base on the Developer column was created to be the primary key of the table. 
 It will also be the foreign key of the games table. The City column was modified to CityID to 
 match the cities table and be the foreign key.
-The Country column will be the foreign key of the countries table.
+The Country column was also modified to CountryID
+and it will be the foreign key of the countries table.
 
 \subsection{Modification on the Games dataset}
 
@@ -148,7 +150,6 @@ Only the following atributes were kept :
   \item \textbf{Required age}: The required age to play the game.
   \item \textbf{Price}: The price of the game.
   \item \textbf{DLCcount}: The number of DLCs in the game.
-  \item \textbf{About the game}: A description of the game.
   \item \textbf{Supported languages}: The languages supported by the game.
   \item \textbf{Windows}: True if the game is supported on Windows, False otherwise.
   \item \textbf{Mac}: True if the game is supported on Mac, False otherwise.
@@ -164,14 +165,15 @@ Only the following atributes were kept :
   \item \textbf{Genres}: The genres of the game.
 \end{itemize}
 
-The games dataset was cleaned by removing the rows that have missing values for the Developers.
-The Developers column was modified to DeveloperID to match the DeveloperID column in the video game studios dataset.
+We dropped the rows that have missing values for the Developers.
+The Developers column was modified to DeveloperID to match the DeveloperID column 
+in the video game studios dataset.
 \\
 
 Since game can have multiple genres, the genres were split into additional csv files.
 One file contains the genresID and name of the genres, and the other file contains 
 the link between the AppID and the genresID, since the game can have multiple genres one AppID can 
-appear multiple in rows. The same thing was done for the categories.
+appear multiple in rows. The same thing was done for the categories and languages supported.
 
 \subsection{Modification on the World cities dataset}
 
@@ -192,8 +194,9 @@ The csv file contains the following atributes:
   \item \textbf{Population}: population of the city.
 \end{itemize}
 
-For this dataset the only modification was to remove the rows where the country was not in 
-the world countries dataset.
+For this dataset we dropped the rows where the country was not in 
+the world countries dataset. We also modify the Country column to CountryID to 
+match the countries table.
 
 \subsection{Modification on the World countries dataset}
 
@@ -222,6 +225,10 @@ The csv file contains the following atributes:
 \item \textbf{Industry}: some industry index of the country.
 \item \textbf{Service}: some service index of the country.
 \end{itemize}
+
+For this dataset the only modification was to add a new column called 
+CountryID to be the primary key of the table.
+
 
 \section{Modelling the database}
 %--------------------Reference List--------------------
