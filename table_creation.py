@@ -327,16 +327,6 @@ def main():
     print(df.to_markdown(index=False))
     print()
 
-    #     db.execute("""COMMENT ON COLUMN mel.municipalities.municipality IS 'code municipality sur 3 caractères';""")
-    #     db.execute("""COMMENT ON COLUMN mel.municipalities.name IS 'name de la municipality';""")
-    #     db.execute("""COMMENT ON COLUMN mel.municipalities.insee IS 'code INSEE sur 5 caractères';""")
-    #     db.execute("""COMMENT ON COLUMN mel.municipalities.epci IS 'code de l''EPCI (MEL) sur 9 caractères';""")
-    #     db.execute("""COMMENT ON COLUMN mel.municipalities.area IS 'area, en km2';""")
-
-    # db.execute("""ALTER TABLE ONLY mel.municipalities
-    #             ADD CONSTRAINT municipalities_pkey PRIMARY KEY (insee);""")
-
-
 
 if __name__ == '__main__':
     main()
