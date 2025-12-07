@@ -117,11 +117,11 @@ def main():
 
     print("Top 3 games in 2020 which has at least 3 supported languages")
     df = db.read_sql_df(
-    """SELECT ga.name as "Game name", ga.metacritic_score as , COUNT(gl.languageID) AS "language count"
+    """SELECT ga.name as "Game name", ga.metacritic_score as "Metacritic score", COUNT(gl.languageID) AS "language count"
     FROM games ga
-    JOIN game_languages AS gl USING (gl.appID)
-    WHERE YEAR(ga.release_date) = 2020
-    GROUP BY ga.appID
+    JOIN game_languages AS gl USING (appid)
+    WHERE ga.release_date >= '2020-01-01' AND ga.release_date < '2021-01-01'
+    GROUP BY ga.appid
     HAVING COUNT(gl.languageID) >= 3
     ORDER BY ga.metacritic_score DESC
     LIMIT 3;
@@ -129,14 +129,14 @@ def main():
     print(df.to_markdown(index=False))
     print()
 
-    print("Average games prices and notable games for each studio in Tokyo or New York or Montréal")
+    print("Average games prices and notable games for each studio in Tokyo or New York or Montréal with more than 3 games")
     df = db.read_sql_df(
-    """SELECT AVG(ga.price) as "average price", s.notable_games as "notable games", s.name as "studio name", ci.iso3 as country
+    """SELECT s.name as "studio name", AVG(ga.price) as "average price", COUNT(ga.name) as "nb of game",ci.city as city , ci.iso3 as country
     FROM games ga
-    JOIN studios AS s USING(s.studioid)
-    JOIN cities AS ci USING(cityid)
-    GROUP BY s.studioid
-    HAVING ci.city = "Tokyo" OR ci.city = "New York" OR ci.city = "Montréal"
+    JOIN studios AS s USING(studioid)
+    JOIN cities AS ci ON ci.id = s.cityid
+    GROUP BY s.studioid, s.name, ci.iso3, ci.city
+    HAVING (ci.city = 'Tokyo' OR ci.city = 'New York' OR ci.city = 'Montréal') AND COUNT(ga.name) >= 3
     ORDER BY "average price"
     LIMIT 20;
     """)
