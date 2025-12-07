@@ -3,30 +3,20 @@
 \usepackage{lipsum}
 \usepackage{mathrsfs}
 \usepackage{amsmath}
-\usepackage{algorithm2e}
-\usepackage{algpseudocode}
+\usepackage[dvipsnames]{xcolor}
 \usepackage{geometry}
 \usepackage{indentfirst} 
 \usepackage{amssymb}
-\usepackage{hyperref}
 \usepackage{caption}
-
-
-%--------------------Reference List--------------------
 \usepackage[
-    backend=biber,
-    style=apa,
+  backend=biber,
+  style=apa,
   ]{biblatex}
 \addbibresource{MasterDataScience.bib}
-
-
-%--------------------Style Algo--------------------
-
-\RestyleAlgo{ruled}
-\numberwithin{algocf}{section}
-
+\usepackage{hyperref}
+  
 %--------------------New Command--------------------
-
+  
 
 %--------------------Title Information--------------------
 \title{
@@ -229,11 +219,31 @@ The csv file contains the following atributes:
 For this dataset the only modification was to add a new column called 
 CountryID to be the primary key of the table.
 
-
 \section{Modelling the database}
-%--------------------Reference List--------------------
-% \newpage
-% \printbibliography[title={Bibliography}, heading=bibintoc]
+
+ADD THE UML FIGURE HERE.
+\\
+
+After cleaning the data we can now organize the tables. 
+We choose to have the following tables with the primary keys in red and the foreign keys underlined:
+\begin{itemize}
+  \itemsep0pt
+  \item \textbf{countries}(\textcolor{red}{countryid}, country, region, population, area, pop\_density, coastline, 
+  infant\_mortality, phones, arable, crops, other, birthrate, deathrate, agriculture, industry, service)
+  \item \textbf{cities}(\textcolor{red}{id}, city, city\_ascii, lat, lng, \underline{countryid}, iso2, iso3, admin\_name, capital, population)
+  \item \textbf{studios}(\textcolor{red}{studioid}, name, notable\_games, notes, \underline{cityid}, \underline{countryid}, year)
+  \item \textbf{games}(\textcolor{red}{appid}, name, \underline{studioid}, release\_date, required\_age, price, dlccount, windows, mac,
+  linux, achievements, estimated\_owners, metacritic\_score, positive, negative, average\_playtime\_forever)
+  \item \textbf{categories}(name, \textcolor{red}{categoryid})
+  \item \textbf{genres}(name, \textcolor{red}{genreid})
+  \item \textbf{languages}(name, \textcolor{red}{languageid})
+  \item \textbf{game\_genres}(\textcolor{red}{\underline{appid}, \underline{genreid}})
+  \item \textbf{game\_categories}(\textcolor{red}{\underline{appid}, \underline{categoryid}})
+  \item \textbf{game\_languages}(\textcolor{red}{\underline{appid}, \underline{languageid}})
+\end{itemize}
+
+
+
 
 
 \end{document}
