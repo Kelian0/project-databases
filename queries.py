@@ -74,7 +74,7 @@ def main():
     print()
     
 
-    print("Game ")
+    print("Game")
     df = db.read_sql_df(
     """SELECT name, release_date, metacritic_score
     FROM games
@@ -88,30 +88,29 @@ def main():
 
     print("Number of studios for each country")
     df = db.read_sql_df(
-    """SELECT country, COUNT(*) AS nb_stud
-    FROM developers
-    GROUP BY country
+    """SELECT c.country, COUNT(*) AS nb_stud
+    FROM studios s JOIN countries c ON s.countryid = c.countryid
+    GROUP BY c.country
     ORDER BY nb_stud DESC
     LIMIT 10;
     """)
     print(df.to_markdown(index=False))
     print()
 
-    print("The most played game and the least played game for each categories")
+    print("The most played game for each genres")
     df = db.read_sql_df(
-    """SELECT c.name , ga.name as "the most played game", MAX(ga.average_playtime_forever) as "time played"
-    FROM games ga
-    JOIN game_categories as gc ON gc.appid = ga.appid
-    JOIN categories as c ON c.categoryid = gc.categoryid
-    GROUP BY c.name
-
-    UNION 
-
-    SELECT c.name as category, ga.name as "the least played game", MIN(ga.average_playtime_forever) as "time played"
-    FROM games ga
-    JOIN game_categories as gc ON gc.appid = ga.appid
-    JOIN categories as c ON c.categoryid = gc.categoryid
-    GROUP BY c.name
+    """
+    SELECT ge.name as "Game Genres", MAX(g.name) as "The most played game", MAX(g.average_playtime_forever) as "Time played"
+    FROM games g
+    JOIN game_genres as gg ON gg.appid = g.appid
+    JOIN genres as ge ON ge.genreid = gg.genreid
+    JOIN (SELECT gg.genreid AS genreid, MAX(g.average_playtime_forever) as max_time_played
+            FROM games g
+            JOIN game_genres as gg ON gg.appid = g.appid
+            GROUP BY gg.genreid) as table_genre_maxtime
+            ON table_genre_maxtime.genreid = gg.genreid AND table_genre_maxtime.max_time_played = g.average_playtime_forever
+    GROUP BY ge.name
+    ORDER BY "Time played" DESC;
     """)
     print(df.to_markdown(index=False))
     print()
