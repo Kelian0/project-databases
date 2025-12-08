@@ -156,7 +156,7 @@ def main():
     print(df.to_markdown(index=False))
     print()
 
-    print("Bigest Cities for each country with at least 1 studio")
+    print("Bigest Cities with at least 1 studio for each country")
     df = db.read_sql_df(
     """
     SELECT co.country, c.city, c.population
