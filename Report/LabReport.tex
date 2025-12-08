@@ -326,6 +326,10 @@ Resident Evil: Operation Raccoon City \\
 Darkfall Unholy Wars \\
 \bottomrule
 \end{tabular}
+\vspace{5ex}
+
+This allows us to identify titles accessible to players without any cost.
+
 \end{minipage}
 
 \noindent
@@ -356,7 +360,9 @@ Starfield & 69.990000 \\
 Indiana Jones and the Great Circle & 69.990000 \\
 \bottomrule
 \end{tabular}
-\vspace{10ex}
+\vspace{5ex}
+
+We want to list all games sorted by price, as price is an important factor when choosing a video game.
 \end{minipage}
 
 \noindent
@@ -388,7 +394,9 @@ Racing & 97 \\
 Free to Play & 73 \\
 \bottomrule
 \end{tabular}
-\vspace{10ex}
+\vspace{5ex}
+
+It is interesting to determine which genres are the most developed by studios worldwide. \\
 \end{minipage}
 
 \noindent
@@ -422,7 +430,9 @@ DOOM Eternal & 2020-03-19 & 88 \\
 \bottomrule
 \end{tabular}
 
-\vspace{10ex}
+\vspace{5ex}
+
+We want all games which have a metacritic score after 2020 since 2020 marks the beginning of the COVID-19 pandemic and the video game’ s bargains exploded.
 \end{minipage}
 
 \noindent
@@ -454,12 +464,14 @@ Australia & 11 \\
 \bottomrule
 \end{tabular}
 
-\vspace{10ex}
+\vspace{5ex}
+
+This allows us to analyze global industry distribution and understand which countries contribute the most in the video game world. \\
 \end{minipage}
 
 \noindent
 \begin{minipage}{\linewidth}
-\noindent\textbf{Bigest Cities with at least 1 studio for each country}
+\noindent\textbf{Biggest Cities with at least 1 studio for each country}
 
 \begin{verbatim}
 SELECT co.country, c.city, c.population
@@ -507,14 +519,18 @@ Romania & Bucharest & 2412530 \\
 \end{tabular}
 
 
-\vspace{10ex}
+\vspace{5ex}
+
+It provides insight into where the game industry is concentrated inside each country. \\
+
+It shows whether the largest urban centers are also the most active in game development.
 \end{minipage}
 
 
 
 \noindent
 \begin{minipage}{\linewidth}
-\noindent\textbf{Games with the Polish languages supported and the catgory Multi-player and that are not the Adventure game}
+\noindent\textbf{Games with the Polish languages supported and the category Multi-player and that are not the Adventure game}
 
 \begin{verbatim}
 SELECT g.name
@@ -551,7 +567,10 @@ Actua Golf \\
 \bottomrule
 \end{tabular}
 
-\vspace{10ex}
+\vspace{5ex}
+
+It allows us to study how many games meet very specific combined criteria which is useful to compare between different genres and categories.
+
 \end{minipage}
 
 
@@ -610,7 +629,9 @@ Free To Play & Project Fireball & 0 \\
 \bottomrule
 \end{tabular}
 
-\vspace{10ex}
+\vspace{5ex}
+
+We retrieve the most played game for each genre in order to help the customer to find the best option within their preferred genres. \\
 \end{minipage}
 
 \noindent
@@ -639,7 +660,9 @@ Crusader Kings III & 91 & 12 \\
 \bottomrule
 \end{tabular}
 
-\vspace{10ex}
+\vspace{5ex}
+
+We retrieve the top 3 games of 2020 that support at least three languages, since global accessibility became especially important during the pandemic\\
 \end{minipage}
 
 \noindent
@@ -674,18 +697,23 @@ Nihon Falcom & 33.606667 & 30 & Tokyo & JPN \\
 Tokyo RPG Factory & 46.656667 & 3 & Tokyo & JPN \\
 \bottomrule
 \end{tabular}
+
+\vspace{5ex}
+This query is interesting because it allows us to compare pricing strategies across different regions of the global video game industry since these cities represent important cultural, economic, and technological centers.
 \end{minipage}
+
+\newpage
 
 \section{Database structure update}
 
-We can imagine extending our database so that it no longer includes only games from Steam, which focuses exclusively on computer games. Instead, we may want to incorporate titles from additional \texttt{platforms} such as the \textit{PlayStation 5} or the \textit{Nintendo Switch}. \\
+We can imagine extending our database so that it no longer includes only games from Steam, which focuses exclusively on computer games. Instead, we may want to incorporate titles from additional \texttt{platforms} , such as the \textit{PlayStation 5} or \textit{Nintendo Switch}. \\
 
-To do this, we need to obtain a dataset listing all available platforms and create a dedicated table—called, for example, platform, that stores information about each platform.\\
+To do this, we need to obtain a data set that lists all available platforms and create a dedicated table—called, for example, platform, that stores information about each platform.\\
 
 We then introduce an associative table, \texttt{game\_platform}, which links \texttt{games} to \texttt{platforms}. This relationship is many-to-many, since multiple games can be available on several platforms, and each platform can support many games. \\
 
 
-To design the platform table, we assign a serial integer as its primary key and include a non-null name attribute. We may also store additional information such as release date, price, or total sales for each platform. \\
+To design the platform table, we assign a serial integer as its primary key and include a non-null name attribute. We may also store additional information, such as the release date, price, or total sales, for each platform. \\
 
 Finally, the \texttt{game\_platform table} must contain two attributes that act as foreign keys referencing the \texttt{game} and \texttt{platform} tables. Together, these two attributes should form a composite primary key to ensure that each game–platform pair is unique.
 
