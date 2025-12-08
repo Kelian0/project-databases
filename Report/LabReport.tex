@@ -3,6 +3,7 @@
 \usepackage{lipsum}
 \usepackage{mathrsfs}
 \usepackage{amsmath}
+\usepackage{{booktabs}}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{geometry}
 \usepackage{indentfirst} 
@@ -66,8 +67,6 @@ The aim of the project for the Databases course is to create a database from a c
 For this project we choose to create a database for the video game industry, with information on
 the games, the developers, the country and town of their headquarters.
 
-
-
 \section{Data of the project}
 
 We started by downloading data from different sources:
@@ -82,7 +81,10 @@ We started by downloading data from different sources:
   \href{https://github.com/bnokoro/Data-Science/blob/master/countries\%20of\%20the\%20world.csv}{From Github, download here}
 \end{itemize}
 
-\subsection{Modification on Video game studios dataset}
+
+\section{Modelling the database}
+
+\subsection{Video game studios dataset}
 
 The video game studios dataset is a dataset from Kaggle, which contains information on the video game studios.
 The csv file contains the following atributes:
@@ -97,29 +99,7 @@ The csv file contains the following atributes:
   \item \textbf{Notes}: notes about the video game studio
 \end{itemize}
 
-Frist manual cleaning (87 lines) was done on video-games-developers.csv to match the other datasets.
-Especially the \textbf{City} and \textbf{Country} columns, which contain non standard names. 
-You can find all the manual modification in the modif\_video\_game\_studio.json file. We also add 
-a new column called \textbf{DeveloperID} to be the primary key of the table.
-
-\begin{figure}[h]
-\centering
-\captionsetup{labelfont=bf,labelformat=empty}
-\caption{Example of missmatched data between game studios and cities datasets}
-\includegraphics[width=\textwidth]{figs/Capture d'écran 2025-12-06 081716.png}
-\caption{Video game studios dataset}
-\includegraphics[width=\textwidth]{figs/Capture d'écran 2025-12-06 081738.png}
-\caption{World cities dataset}
-\end{figure}
-
-
-Then a DeveloperID base on the Developer column was created to be the primary key of the table. 
-It will also be the foreign key of the games table. The City column was modified to CityID to 
-match the cities table and be the foreign key.
-The Country column was also modified to CountryID
-and it will be the foreign key of the countries table.
-
-\subsection{Modification on the Games dataset}
+\subsection{Games dataset}
 
 The games dataset is a dataset from Huggingface, which contains information on the games.
 The csv file contains 40 atributes : AppID, Name, Release date, Estimated owners, 
@@ -130,7 +110,8 @@ User score, Positive, Negative, Score rank, Achievements, Recommendations, Notes
 Average playtime forever, Average playtime two weeks, Median playtime forever, 
 Median playtime two weeks, Developers, Publishers, Categories, Genres, Tags, Screenshots, Movies,
 \\
-Only the following atributes were kept :
+
+We only kept the following atributes:
 \begin{itemize}
   \itemsep0pt
   \item \textbf{AppID}: The ID of the game.
@@ -155,17 +136,7 @@ Only the following atributes were kept :
   \item \textbf{Genres}: The genres of the game.
 \end{itemize}
 
-We dropped the rows that have missing values for the Developers.
-The Developers column was modified to DeveloperID to match the DeveloperID column 
-in the video game studios dataset.
-\\
-
-Since game can have multiple genres, the genres were split into additional csv files.
-One file contains the genresID and name of the genres, and the other file contains 
-the link between the AppID and the genresID, since the game can have multiple genres one AppID can 
-appear multiple in rows. The same thing was done for the categories and languages supported.
-
-\subsection{Modification on the World cities dataset}
+\subsection{World cities dataset}
 
 The world cities dataset is a dataset from Kaggle, which contains information on the world cities.
 The csv file contains the following atributes:
@@ -184,11 +155,8 @@ The csv file contains the following atributes:
   \item \textbf{Population}: population of the city.
 \end{itemize}
 
-For this dataset we dropped the rows where the country was not in 
-the world countries dataset. We also modify the Country column to CountryID to 
-match the countries table.
 
-\subsection{Modification on the World countries dataset}
+\subsection{World countries dataset}
 
 The world countries dataset is a dataset from Kaggle, which contains information on the world countries.
 The csv file contains the following atributes:
@@ -216,19 +184,16 @@ The csv file contains the following atributes:
 \item \textbf{Service}: some service index of the country.
 \end{itemize}
 
-For this dataset the only modification was to add a new column called 
-CountryID to be the primary key of the table.
+\subsection{Modeling the database}
 
-\section{Modelling the database}
-
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \captionsetup{labelfont=bf,labelformat=empty}
 \caption{Database Figure}
 \includegraphics[width=\textwidth]{figs/Database Diagramm.png}
 \end{figure}
 
-After cleaning the data we can now organize the tables. 
+After cleaning the data (see next section) we can now organize the tables. 
 We choose to have the following tables with the primary keys in red and the foreign keys underlined:
 \begin{itemize}
   \itemsep0pt
@@ -246,7 +211,372 @@ We choose to have the following tables with the primary keys in red and the fore
   \item \textbf{game\_languages}(\textcolor{red}{\underline{appid}, \underline{languageid}})
 \end{itemize}
 
+\section{Population of tables}
 
+
+\subsection{Modifications for Games}
+
+Since game can have multiple \textbf{genres}, the genres were split into additional tables
+(and csv files).
+We first create a table containing the \textbf{genreid} and \textbf{name} of the genres. 
+Then we create another table containing the \textbf{appid} and the \textbf{genreid}
+, since the game can have multiple genres one AppID can 
+appear in multiple rows. Finally we remove the original genres column from the games.
+\\
+
+The same method was used for the categories and languages supported atributes. So we 
+ended up with 6 new tables.
+\\
+
+To handle the link with the studios table we modified the \textbf{Developers} column to
+match the \textbf{studioid}. For the Developers name that was not in the studios table 
+we decided to drop the rows. Since we drop the missmatched data we can set the 
+\textbf{studioid} column to not null, in orther words every game must have a studio that is
+in the studios table.
+\\
+\\
+The games table contains 1670 games. \\
+The genres table contains 28 genres. \\
+The categories table contains 29 categories. \\
+The languages table contains 121 languages. 
+
+
+\subsection{Modifications for Studios}
+
+Frist manual cleaning (87 lines) was done on video-games-developers.csv to match the other datasets.
+Especially the \textbf{City} and \textbf{Country} columns, which contain non standard names. 
+You can find all the manual modification in the modif\_video\_game\_studio.json file.
+
+\begin{figure}[ht]
+\centering
+\captionsetup{labelfont=bf,labelformat=empty}
+\caption{Example of missmatched data between studios and cities datasets}
+\includegraphics[width=\textwidth]{figs/Capture d'écran 2025-12-06 081716.png}
+\caption{Video game studios dataset}
+\includegraphics[width=\textwidth]{figs/Capture d'écran 2025-12-06 081738.png}
+\caption{World cities dataset}
+\end{figure}
+
+Then a DeveloperID base on the Developer column was created to be the primary key of the table. 
+The City column was modified to \textbf{cityid} to match the cities table and be a foreign key.
+The Country column was also modified to \textbf{countryid} to match the countries table
+and it will be the foreign key to the countries table.
+\\
+
+The final studios table contains 686 studios.
+
+\subsection{Modifications for Cities}
+
+For this dataset we had some missmatched and missing data for the countries. We decided 
+to handle manually only the countries that were also present in the studios table (only 
+the Czech Republic). We dropped the others and modified the country column to 
+\textbf{countryid} to be the foreign key to the countries table. 
+\\
+
+The final cities table contains 47453 cities.
+
+
+\subsection{Modifications for Countries}
+
+For this dataset the only modification was to add a new column called 
+\textbf{countryid} to be the primary key of the table. Some data formatting was also done
+to match the sql formats. 
+\\
+
+The final countries table contains 227 countries.
+
+\subsection{Table Creation}
+
+We started by creating the table for the countries since it does not have any foreign keys.
+We then add the cities table and the studios table with the constraints of 
+the foreign keys. Then we added the games table, the genres table, the categories table
+and the languages table. We finished with the game\_genres table, game\_categories table.
+\\
+
+We alter some of the table because we put too restrictive constriants on some atributes. 
+We then add the data using the csv files.
+To see the table creation in detail you can see the \textbf{table\_creation.py} file.
+
+\section{Querying}
+
+
+\noindent
+\begin{minipage}{\linewidth}
+\textbf{Free Games}
+\begin{verbatim}
+SELECT name
+FROM games
+WHERE price = 0
+LIMIT 10;
+\end{verbatim}
+
+\begin{tabular}{l}
+\toprule
+name \\
+\midrule
+Apex Legends \\
+The Lab \\
+Back to the Future: The Game \\
+Warhammer: Vermintide VR - Hero Trials \\
+DRAGON QUEST XI: Echoes of an Elusive Age - Digital Edition of Light \\
+STAR WARS: The Old Republic \\
+BRINK \\
+Prime World: Defenders 2 \\
+Resident Evil: Operation Raccoon City \\
+Darkfall Unholy Wars \\
+\bottomrule
+\end{tabular}
+\end{minipage}
+
+\noindent
+\begin{minipage}{\linewidth}
+\vspace{10ex}
+\noindent\textbf{Games sorted by price }
+
+\begin{verbatim}
+SELECT name, price
+FROM games
+ORDER BY price DESC
+LIMIT 10;
+\end{verbatim}
+
+\begin{tabular}{lr}
+\toprule
+name & price \\
+\midrule
+Call of Duty: Ghosts - Digital Hardened Edition & 99.990000 \\
+Microsoft Flight Simulator 2024 & 69.990000 \\
+F1 23 & 69.990000 \\
+Suicide Squad: Kill the Justice League & 69.990000 \\
+FINAL FANTASY VII REMAKE INTERGRADE & 69.990000 \\
+NBA 2K25 & 69.990000 \\
+F1 24 & 69.990000 \\
+Need for Speed Unbound & 69.990000 \\
+Starfield & 69.990000 \\
+Indiana Jones and the Great Circle & 69.990000 \\
+\bottomrule
+\end{tabular}
+\vspace{10ex}
+\end{minipage}
+
+\noindent
+\begin{minipage}{\linewidth}
+\noindent\textbf{Number of games by genre}
+
+\begin{verbatim}
+SELECT ge.name, COUNT(*) AS "nb of game"
+FROM genres ge
+JOIN game_genres gg ON ge.genreID = gg.genreID
+GROUP BY ge.genreID
+ORDER BY "nb of game" DESC
+LIMIT 10;
+\end{verbatim}
+
+\begin{tabular}{lr}
+\toprule
+name & nb of game \\
+\midrule
+Action & 827 \\
+Adventure & 572 \\
+RPG & 373 \\
+Strategy & 316 \\
+Indie & 277 \\
+Simulation & 273 \\
+Casual & 190 \\
+Sports & 109 \\
+Racing & 97 \\
+Free to Play & 73 \\
+\bottomrule
+\end{tabular}
+\vspace{10ex}
+\end{minipage}
+
+\noindent
+\begin{minipage}{\linewidth}
+
+\noindent\textbf{All game with a metacritic score after 2020 }
+
+\begin{verbatim}
+SELECT name, release_date, metacritic_score
+FROM games
+WHERE release_date >= '2020-01-01'
+AND metacritic_score > 0
+ORDER BY metacritic_score DESC
+LIMIT 10;
+\end{verbatim}
+
+\begin{tabular}{llr}
+\toprule
+name & release\_date & metacritic\_score \\
+\midrule
+Mass Effect 2 (2010) Edition & 2023-05-15 & 94 \\
+Half-Life: Alyx & 2020-03-23 & 93 \\
+Mission: It's Complicated & 2020-02-14 & 91 \\
+Crusader Kings III & 2020-09-01 & 91 \\
+Microsoft Flight Simulator Game of the Year Edition & 2020-04-17 & 91 \\
+The Making of Karateka & 2023-08-29 & 90 \\
+Psychonauts 2 & 2021-08-24 & 89 \\
+Mass Effect 3 N7 Digital Deluxe Edition (2012) & 2020-06-11 & 89 \\
+Apex Legends & 2020-11-04 & 88 \\
+DOOM Eternal & 2020-03-19 & 88 \\
+\bottomrule
+\end{tabular}
+
+\vspace{10ex}
+\end{minipage}
+
+\noindent
+\begin{minipage}{\linewidth}
+\noindent\textbf{Number of studios by country}
+
+\begin{verbatim}
+SELECT c.country, COUNT(*) AS nb_stud
+FROM studios s JOIN countries c ON s.countryid = c.countryid
+GROUP BY c.country
+ORDER BY nb_stud DESC
+LIMIT 10;
+\end{verbatim}
+
+\begin{tabular}{lr}
+\toprule
+country & nb\_stud \\
+\midrule
+United States & 232 \\
+Japan & 150 \\
+United Kingdom & 73 \\
+France & 24 \\
+Canada & 21 \\
+Germany & 19 \\
+Sweden & 17 \\
+Korea, South & 14 \\
+Poland & 13 \\
+Australia & 11 \\
+\bottomrule
+\end{tabular}
+
+\vspace{10ex}
+\end{minipage}
+
+\noindent
+\begin{minipage}{\linewidth}
+\noindent\textbf{The most played game for each genres}
+
+\begin{verbatim}
+SELECT ge.name AS "Game Genres", MAX(g.name) AS "The most played game", 
+       MAX(g.average_playtime_forever) AS "Time played"
+FROM games g
+JOIN game_genres as gg ON gg.appid = g.appid
+JOIN genres as ge ON ge.genreid = gg.genreid
+JOIN (SELECT gg.genreid AS genreid, MAX(g.average_playtime_forever) as max_time_played
+      FROM games g
+      JOIN game_genres as gg ON gg.appid = g.appid
+      GROUP BY gg.genreid) as table_genre_maxtime
+      ON table_genre_maxtime.genreid = gg.genreid 
+      AND table_genre_maxtime.max_time_played = g.average_playtime_forever
+GROUP BY ge.name
+ORDER BY "Time played" DESC;
+\end{verbatim}
+
+\begin{tabular}{llr}
+\toprule
+Game Genres & The most played game & Time played \\
+\midrule
+Strategy & Dota 2 & 37162 \\
+Action & Dota 2 & 37162 \\
+Free to Play & Dota 2 & 37162 \\
+Massively Multiplayer & FINAL FANTASY XIV Online & 27478 \\
+RPG & FINAL FANTASY XIV Online & 27478 \\
+Casual & MARVEL Puzzle Quest & 18149 \\
+Adventure & Rust & 16623 \\
+Indie & Rust & 16623 \\
+Simulation & Arma 3 & 12276 \\
+Sports & NBA 2K20 & 9237 \\
+Racing & Micro Machines World Series & 7004 \\
+Early Access & Mount \& Blade II: Bannerlord & 5482 \\
+Video Production & Source Filmmaker & 1846 \\
+Animation \& Modeling & Source Filmmaker & 1846 \\
+Violent & Pathfinder Adventures & 649 \\
+Sexual Content & Mary Skelter: Nightmares & 400 \\
+Nudity & X-Blades & 291 \\
+Web Publishing & Multiplicity & 2 \\
+Audio Production & Multiplicity & 2 \\
+Design \& Illustration & Multiplicity & 2 \\
+Education & Multiplicity & 2 \\
+Photo Editing & Multiplicity & 2 \\
+Software Training & Multiplicity & 2 \\
+Utilities & Multiplicity & 2 \\
+Accounting & Multiplicity & 2 \\
+Game Development & Starfield: Creation Kit & 0 \\
+Gore & Warhammer: Vermintide VR - Hero Trials & 0 \\
+Free To Play & Project Fireball & 0 \\
+\bottomrule
+\end{tabular}
+
+\vspace{10ex}
+\end{minipage}
+
+\noindent
+\begin{minipage}{\linewidth}
+\noindent\textbf{Top 3 games in 2020 which has at least 3 supported languages}
+
+\begin{verbatim}
+SELECT ga.name as "Game name", ga.metacritic_score as "Metacritic score",
+       COUNT(gl.languageID) AS "language count"
+FROM games ga
+JOIN game_languages AS gl USING (appid)
+WHERE ga.release_date >= '2020-01-01' AND ga.release_date < '2021-01-01'
+GROUP BY ga.appid
+HAVING COUNT(gl.languageID) >= 3
+ORDER BY ga.metacritic_score DESC
+LIMIT 3;
+\end{verbatim}
+
+\begin{tabular}{lrr}
+\toprule
+Game name & Metacritic score & language count \\
+\midrule
+Half-Life: Alyx & 93 & 12 \\
+Microsoft Flight Simulator Game of the Year Edition & 91 & 12 \\
+Crusader Kings III & 91 & 12 \\
+\bottomrule
+\end{tabular}
+
+\vspace{10ex}
+\end{minipage}
+
+\noindent
+\begin{minipage}{\linewidth}
+\noindent\textbf{Average games prices and notable games for each studio in Tokyo or New York or Montréal with more than 3 games}
+
+\begin{verbatim}
+SELECT s.name as "studio name", AVG(ga.price) as "average price", 
+       COUNT(ga.name) as "nb of game",ci.city as city , ci.iso3 as country
+FROM games ga
+JOIN studios AS s USING(studioid)
+JOIN cities AS ci ON ci.id = s.cityid
+GROUP BY s.studioid, s.name, ci.iso3, ci.city
+HAVING (ci.city = 'Tokyo' OR ci.city = 'New York' OR ci.city = 'Montréal') 
+       AND COUNT(ga.name) >= 3
+ORDER BY "average price"
+LIMIT 20;
+\end{verbatim}
+
+\begin{tabular}{lrrll}
+\toprule
+studio name & average price & nb of game & city & country \\
+\midrule
+Rockstar Games & 14.578000 & 10 & New York & USA \\
+FromSoftware & 19.996667 & 3 & Tokyo & JPN \\
+Idea Factory & 22.767778 & 9 & Tokyo & JPN \\
+Compulsion Games & 25.990000 & 3 & Montréal & CAN \\
+Square Enix & 26.680877 & 57 & Tokyo & JPN \\
+Tango Gameworks & 29.992000 & 5 & Tokyo & JPN \\
+Tamsoft & 32.212222 & 9 & Tokyo & JPN \\
+Nihon Falcom & 33.606667 & 30 & Tokyo & JPN \\
+Tokyo RPG Factory & 46.656667 & 3 & Tokyo & JPN \\
+\bottomrule
+\end{tabular}
+\end{minipage}
 
 
 
