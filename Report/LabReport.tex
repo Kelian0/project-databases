@@ -644,7 +644,7 @@ Crusader Kings III & 91 & 12 \\
 
 \noindent
 \begin{minipage}{\linewidth}
-\noindent\textbf{Average games prices and notable games for each studio in Tokyo or New York or Montréal with more than 3 games}
+\noindent\textbf{Average games prices for each studio in Tokyo or New York or Montréal with more than 3 games}
 
 \begin{verbatim}
 SELECT s.name as "studio name", AVG(ga.price) as "average price", 
@@ -675,6 +675,19 @@ Tokyo RPG Factory & 46.656667 & 3 & Tokyo & JPN \\
 \bottomrule
 \end{tabular}
 \end{minipage}
+
+\section{Database structure update}
+
+We can imagine extending our database so that it no longer includes only games from Steam, which focuses exclusively on computer games. Instead, we may want to incorporate titles from additional \texttt{platforms} such as the \textit{PlayStation 5} or the \textit{Nintendo Switch}. \\
+
+To do this, we need to obtain a dataset listing all available platforms and create a dedicated table—called, for example, platform, that stores information about each platform.\\
+
+We then introduce an associative table, \texttt{game\_platform}, which links \texttt{games} to \texttt{platforms}. This relationship is many-to-many, since multiple games can be available on several platforms, and each platform can support many games. \\
+
+
+To design the platform table, we assign a serial integer as its primary key and include a non-null name attribute. We may also store additional information such as release date, price, or total sales for each platform. \\
+
+Finally, the \texttt{game\_platform table} must contain two attributes that act as foreign keys referencing the \texttt{game} and \texttt{platform} tables. Together, these two attributes should form a composite primary key to ensure that each game–platform pair is unique.
 
 
 
