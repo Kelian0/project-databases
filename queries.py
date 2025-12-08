@@ -156,6 +156,48 @@ def main():
     print(df.to_markdown(index=False))
     print()
 
+    print("Bigest Cities for each country with at least 1 studio")
+    df = db.read_sql_df(
+    """
+    SELECT co.country, c.city, c.population
+        FROM studios s JOIN cities c ON s.cityid = c.id
+        JOIN (SELECT MAX(c.population) AS max_pop, c.countryid
+              FROM studios s JOIN cities c ON s.cityid = c.id
+              GROUP BY c.countryid) AS table_max_pop
+        ON table_max_pop.countryid = s.countryid AND table_max_pop.max_pop = c.population
+        JOIN countries co ON co.countryid = c.countryid
+        GROUP BY co.country, c.city, c.population
+        ORDER BY population DESC;
+    """)
+    df_to_latex(df, file_paht='Report/queries/8.txt')
+    print(df.to_markdown(index=False))
+    print()
+
+    print("Games with the English languages supported, the catgory Single-player and not the genre Adventure")
+    df = db.read_sql_df(
+    """
+    (SELECT g.name
+    FROM games g
+    JOIN game_languages gl ON g.appid = gl.appid
+    JOIN languages l ON l.languageid = gl.languageid
+    WHERE l.name = ' French'
+    INTERSECT
+    SELECT g.name
+    FROM games g
+    JOIN game_categories gc ON g.appid = gc.appid
+    JOIN categories c ON c.categoryid = gc.categoryid
+    WHERE c.name = 'Co-op')
+    EXCEPT
+    SELECT g.name
+    FROM games g
+    JOIN game_genres gg ON g.appid = gg.appid
+    JOIN genres ge ON ge.genreid = gg.genreid
+    WHERE ge.name = 'Adventure';
+    """)
+    # df_to_latex(df, file_paht='Report/queries/9.txt')
+    print(df.to_markdown(index=False))
+    print()
+
 
 if __name__ == '__main__':
     main()
