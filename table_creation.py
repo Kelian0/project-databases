@@ -53,6 +53,9 @@ def main():
 
     # db.execute("""DROP TABLE cities CASCADE;""")
     # db.execute("""DROP TABLE games CASCADE;""")
+    db.execute("""DROP TABLE game_languages CASCADE;""")
+    db.execute("""DROP TABLE languages CASCADE;""")
+
 
     if db.check_table_exist(table_name="countries") is None:
         db.execute("""CREATE TABLE countries (
@@ -248,7 +251,7 @@ def main():
 
     print("Test countries ")
     df = db.read_sql_df(
-    """SELECT *
+    """SELECT COUNT(*)
     FROM countries
     LIMIT 5;
     """)
@@ -262,7 +265,7 @@ def main():
 
     print("Test cities ")
     df = db.read_sql_df(
-    """SELECT *
+    """SELECT COUNT(*)
     FROM cities
     LIMIT 5;
     """)
@@ -275,7 +278,7 @@ def main():
 
     print("Test studios ")
     df = db.read_sql_df(
-    """SELECT *
+    """SELECT COUNT(*)
     FROM studios
     LIMIT 5;
     """)
@@ -289,7 +292,7 @@ def main():
 
     print("Test games ")
     df = db.read_sql_df(
-    """SELECT *
+    """SELECT COUNT(*)
     FROM games
     LIMIT 5;
     """)
@@ -302,7 +305,7 @@ def main():
 
     print("Test categories ")
     df = db.read_sql_df(
-    """SELECT *
+    """SELECT COUNT(*)
     FROM categories
     LIMIT 5;
     """)
@@ -315,7 +318,7 @@ def main():
 
     print("Test languages ")
     df = db.read_sql_df(
-    """SELECT *
+    """SELECT COUNT(*)
     FROM languages
     LIMIT 5;
     """)
@@ -329,7 +332,7 @@ def main():
 
     print("Test genres ")
     df = db.read_sql_df(
-    """SELECT *
+    """SELECT COUNT(*)
     FROM genres
     LIMIT 5;
     """)
@@ -342,7 +345,7 @@ def main():
 
     print("Test game_categories ")
     df = db.read_sql_df(
-    """SELECT *
+    """SELECT COUNT(*)
     FROM game_categories
     LIMIT 5;
     """)
@@ -356,7 +359,7 @@ def main():
 
     print("Test game_languages ")
     df = db.read_sql_df(
-    """SELECT *
+    """SELECT COUNT(*)
     FROM game_languages
     LIMIT 5;
     """)
@@ -369,7 +372,7 @@ def main():
 
     print("Test game_genres ")
     df = db.read_sql_df(
-    """SELECT *
+    """SELECT COUNT(*)
     FROM game_genres
     LIMIT 5;
     """)
