@@ -7,6 +7,11 @@ from dotenv import load_dotenv
 
 load_dotenv()  # take environment variables from .env.
 
+def df_to_latex(df, file_paht='Report/queries.txt'):
+    with open(file_paht, 'w') as f:
+        f.write(df.to_latex(index=False))
+    return df.to_latex(index=False)
+
 
 class DBTM():
     def __init__(self):
@@ -48,6 +53,7 @@ def main():
     WHERE price = 0
     LIMIT 10;
     """)
+    df_to_latex(df, file_paht='Report/queries/0FreeGames.txt')
     print(df.to_markdown(index=False))
     print()
 
@@ -58,6 +64,7 @@ def main():
     ORDER BY price DESC
     LIMIT 10;
     """)
+    df_to_latex(df, file_paht='Report/queries/1GamesByPrice.txt')
     print(df.to_markdown(index=False))
     print()
 
@@ -70,6 +77,7 @@ def main():
     ORDER BY "nb of game" DESC
     LIMIT 10;
     """)
+    df_to_latex(df, file_paht='Report/queries/2GamesByGenre.txt')
     print(df.to_markdown(index=False))
     print()
     
@@ -83,6 +91,7 @@ def main():
     ORDER BY metacritic_score DESC
     LIMIT 10;
     """)
+    df_to_latex(df, file_paht='Report/queries/3GamesAfter2020.txt')
     print(df.to_markdown(index=False))
     print()
 
@@ -94,6 +103,7 @@ def main():
     ORDER BY nb_stud DESC
     LIMIT 10;
     """)
+    df_to_latex(df, file_paht='Report/queries/4NBStudiosBYCountry.txt')
     print(df.to_markdown(index=False))
     print()
 
@@ -112,6 +122,7 @@ def main():
     GROUP BY ge.name
     ORDER BY "Time played" DESC;
     """)
+    df_to_latex(df, file_paht='Report/queries/5MostPlayedByGenre.txt')
     print(df.to_markdown(index=False))
     print()
 
@@ -126,6 +137,7 @@ def main():
     ORDER BY ga.metacritic_score DESC
     LIMIT 3;
     """)
+    df_to_latex(df, file_paht='Report/queries/6Top3Games.txt')
     print(df.to_markdown(index=False))
     print()
 
@@ -140,6 +152,7 @@ def main():
     ORDER BY "average price"
     LIMIT 20;
     """)
+    df_to_latex(df, file_paht='Report/queries/7AveragePrices.txt')
     print(df.to_markdown(index=False))
     print()
 
