@@ -191,6 +191,55 @@ def main():
 
     db.execute("""ALTER TABLE games ALTER COLUMN release_date DROP NOT NULL;""")
 
+#======================COMMENTS ON TABLES=====================
+    db.execute("""COMMENT ON COLUMN games.appid IS 'AppID, unique identifier for each app';""")
+    db.execute("""COMMENT ON COLUMN games.name IS 'Game name';""")
+    db.execute("""COMMENT ON COLUMN games.studioid IS 'unique identifier for the studio';""")
+    db.execute("""COMMENT ON COLUMN games.release_date IS 'Release date';""")
+    db.execute("""COMMENT ON COLUMN games.required_age IS 'Age required to play, 0 if it is for all audiences ';""")
+    db.execute("""COMMENT ON COLUMN games.price IS 'Price in USD, 0.0 if its free';""")
+    db.execute("""COMMENT ON COLUMN games.DLCcount IS 'Number of DLCs, 0 if you have none';""")
+    db.execute("""COMMENT ON COLUMN games.windows IS 'Does it support Windows? ';""")
+    db.execute("""COMMENT ON COLUMN games.mac IS 'Does it support Mac? ';""")
+    db.execute("""COMMENT ON COLUMN games.linux IS 'Does it support Linux?';""")
+    db.execute("""COMMENT ON COLUMN games.achievements IS 'Number of achievements, 0 if it has none';""")
+    db.execute("""COMMENT ON COLUMN games.estimated_owners IS 'Estimated owners (string, e.g.: 0 - 20000)';""")
+    db.execute("""COMMENT ON COLUMN games.metacritic_score IS 'Metacritic score, 0 if it has none';""")
+    db.execute("""COMMENT ON COLUMN games.positive IS 'Positive votes';""")
+    db.execute("""COMMENT ON COLUMN games.negative IS 'Negative votes';""")
+    db.execute("""COMMENT ON COLUMN games.average_playtime_forever IS 'Average playtime since March 2009, in minutes';""")
+
+    db.execute("""COMMENT ON COLUMN countries.countryid IS 'Unique identifier for each country';""")
+    db.execute("""COMMENT ON COLUMN countries.country IS 'Name of the country';""")
+    db.execute("""COMMENT ON COLUMN countries.region IS 'Geographical region';""")
+    db.execute("""COMMENT ON COLUMN countries.area IS 'Area (sq. mi.)';""")
+    db.execute("""COMMENT ON COLUMN countries.pop_density IS 'Pop. Density (per sq. mi.)';""")
+    db.execute("""COMMENT ON COLUMN countries.coastline IS 'Coastline (coast/area ratio)';""")
+    db.execute("""COMMENT ON COLUMN countries.infant_mortality IS 'Infant mortality (per 1000 births)';""")
+    db.execute("""COMMENT ON COLUMN countries.phones IS 'Number of Phones (per 1000)';""")
+    db.execute("""COMMENT ON COLUMN countries.arable IS 'Percentage of land that is Arable (%)';""")
+    db.execute("""COMMENT ON COLUMN countries.crops IS 'Percentage of land reserved for Crops (%)';""")
+    db.execute("""COMMENT ON COLUMN countries.other IS 'Percentage of Other Land (forest, pasture, etc.)';""")
+    db.execute("""COMMENT ON COLUMN countries.agriculture IS 'Ratio of Agriculture sector';""")
+    db.execute("""COMMENT ON COLUMN countries.industry IS 'Ratio of Industry sector';""")
+    db.execute("""COMMENT ON COLUMN countries.service IS 'Ratio of Service sector';""")
+
+
+    db.execute("""COMMENT ON COLUMN cities.id IS 'Unique identifier for each city';""")
+    db.execute("""COMMENT ON COLUMN cities.city IS 'City name';""")
+    db.execute("""COMMENT ON COLUMN cities.city_ascii IS 'City name in ASCII';""")
+    db.execute("""COMMENT ON COLUMN cities.lat IS 'Latitude';""")
+    db.execute("""COMMENT ON COLUMN cities.lng IS 'Longitude';""")
+    db.execute("""COMMENT ON COLUMN cities.iso2 IS 'Country code ISO2';""")
+    db.execute("""COMMENT ON COLUMN cities.iso3 IS 'Coubtry code ISO3';""")
+    db.execute("""COMMENT ON COLUMN cities.admin_name IS 'name of the adminstrative area';""")
+    db.execute("""COMMENT ON COLUMN cities.capital IS 'primary, admin, minor or none';""")
+
+    db.execute("""COMMENT ON COLUMN studios.studioid IS 'Unique identifier for each studio';""")
+    db.execute("""COMMENT ON COLUMN studios.name IS 'Studio name';""")
+    db.execute("""COMMENT ON COLUMN studios.notable_games IS 'Noteable games and franchises';""")
+    db.execute("""COMMENT ON COLUMN studios.notes IS 'Additional information on the studio';""")
+    db.execute("""COMMENT ON COLUMN studios.year IS 'Year of establishment';""")
 
 
 #============================================================================
