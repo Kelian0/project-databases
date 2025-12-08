@@ -173,28 +173,23 @@ def main():
     print(df.to_markdown(index=False))
     print()
 
-    print("Games with the English languages supported, the catgory Single-player and not the genre Adventure")
+    print("Games with the Polish languages supported, the catgory Multi-player and not the genre Adventure")
     df = db.read_sql_df(
     """
-    (SELECT g.name
+    SELECT g.name
     FROM games g
     JOIN game_languages gl ON g.appid = gl.appid
     JOIN languages l ON l.languageid = gl.languageid
-    WHERE l.name = ' French'
-    INTERSECT
-    SELECT g.name
-    FROM games g
     JOIN game_categories gc ON g.appid = gc.appid
     JOIN categories c ON c.categoryid = gc.categoryid
-    WHERE c.name = 'Co-op')
-    EXCEPT
-    SELECT g.name
-    FROM games g
     JOIN game_genres gg ON g.appid = gg.appid
     JOIN genres ge ON ge.genreid = gg.genreid
-    WHERE ge.name = 'Adventure';
+    WHERE l.name = 'Polish' AND c.name = 'Multi-player' AND ge.name != 'Adventure'
+    GROUP BY g.name
+    ORDER BY g.name
+    LIMIT 10;
     """)
-    # df_to_latex(df, file_paht='Report/queries/9.txt')
+    df_to_latex(df, file_paht='Report/queries/9.txt')
     print(df.to_markdown(index=False))
     print()
 
