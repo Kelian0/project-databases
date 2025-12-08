@@ -706,9 +706,9 @@ This query is interesting because it allows us to compare pricing strategies acr
 
 \section{Database structure update}
 
-We can imagine extending our database so that it no longer includes only games from Steam, which focuses exclusively on computer games. Instead, we may want to incorporate titles from additional \texttt{platforms} , such as the \textit{PlayStation 5} or \textit{Nintendo Switch}. \\
+We can imagine extending our database so that it no longer includes only games from Steam, which focuses on computer games. Instead, we may want to incorporate games from others \texttt{platforms} , such as the \textit{PlayStation 5} or \textit{Nintendo Switch}. \\
 
-To do this, we need to obtain a data set that lists all available platforms and create a dedicated table—called, for example, platform, that stores information about each platform.\\
+To do this, we need to obtain a data set that lists all available platforms and create a dedicated table called, for example, platform, that stores information about each platform.\\
 
 We then introduce an associative table, \texttt{game\_platform}, which links \texttt{games} to \texttt{platforms}. This relationship is many-to-many, since multiple games can be available on several platforms, and each platform can support many games. \\
 
